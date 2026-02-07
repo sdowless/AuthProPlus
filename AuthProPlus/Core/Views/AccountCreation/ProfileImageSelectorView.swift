@@ -9,8 +9,8 @@ import PhotosUI
 import SwiftUI
 
 struct ProfileImageSelectorView: View {
-    @Environment(AuthenticationRouter.self) private var router
-    @Environment(UserManager.self) private var userManager
+    @Environment(\.authRouter) private var router
+    @Environment(\.userManager.self) private var userManager
     @Environment(\.authDataStore) private var store
     
     @State private var isUploadingPhoto = false

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct UserInformationView: View {
-    @Environment(AuthenticationRouter.self) private var router
+    @Environment(\.authRouter) private var router
     @Environment(\.authDataStore) private var store
     
     @State private var validationManager = RegistrationValidationManager(service: RegistrationValidationService())
     @State private var emailValidation: InputValidationState = .idle
     @State private var usernameValidation: InputValidationState = .idle
+    @State private var emailValidationTask: Task<Void, Never>?
+    @State private var usernameValidationTask: Task<Void, Never>?
     
     var body: some View {
         @Bindable var store = store
@@ -67,6 +69,10 @@ struct UserInformationView: View {
         .onChange(of: store.email) { _, newValue in
             validateEmail(newValue)
         }
+        .onDisappear {
+            emailValidationTask?.cancel()
+            usernameValidationTask?.cancel()
+        }
         .padding()
     }
 }
@@ -80,25 +86,41 @@ private extension UserInformationView {
     
     func validateEmail(_ email: String) {
         guard email.isValidEmail() else {
+            emailValidationTask?.cancel()
+            emailValidationTask = nil
             emailValidation = .idle
             return
         }
-        
-        Task {
-            emailValidation = .validating
-            emailValidation = await validationManager.validateEmail(email)
+
+        emailValidationTask?.cancel()
+        emailValidationTask = Task {
+            await MainActor.run { emailValidation = .validating }
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !Task.isCancelled else { return }
+
+            let result = await validationManager.validateEmail(email)
+            guard !Task.isCancelled else { return }
+            await MainActor.run { emailValidation = result }
         }
     }
     
     func validateUsername(_ username: String) {
         guard username.isValidUsername() else {
+            usernameValidationTask?.cancel()
+            usernameValidationTask = nil
             usernameValidation = .idle
             return
         }
-        
-        Task {
-            usernameValidation = .validating
-            usernameValidation = await validationManager.validateUsername(username)
+
+        usernameValidationTask?.cancel()
+        usernameValidationTask = Task {
+            await MainActor.run { usernameValidation = .validating }
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !Task.isCancelled else { return }
+
+            let result = await validationManager.validateUsername(username)
+            guard !Task.isCancelled else { return }
+            await MainActor.run { usernameValidation = result }
         }
     }
 }

@@ -15,7 +15,7 @@ class MockUserService: UserServiceProtocol {
         return currentUser
     }
     
-    func fetchUser(withUid uid: String) async throws -> User {
+    func fetchUser(withUid uid: String) async throws -> User? {
         return currentUser
     }
     

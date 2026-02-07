@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(AuthManager.self) private var authManager
     @Environment(\.authDataStore) private var store
+    @Environment(\.authRouter) private var router
+    @Environment(\.authManager.self) private var authManager
     
     @State private var isAuthenticating = false
     
@@ -39,7 +40,7 @@ struct LoginView: View {
                 .disabled(!formIsValid)
                 .opacity(formIsValid ? 1.0 : 0.5)
                 
-                Button { } label: {
+                Button { router.path.append(.login(.resetPassword)) } label: {
                     Text("Forgot password?")
                         .underline()
                         .font(.subheadline)

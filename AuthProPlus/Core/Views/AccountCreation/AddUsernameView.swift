@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddUsernameView: View {
-    @Environment(AuthManager.self) private var authManager
-    @Environment(UserManager.self) private var userManager
+    @Environment(\.authManager.self) private var authManager
+    @Environment(\.userManager.self) private var userManager
     
     @State private var usernameValidationState: InputValidationState = .idle
     @State private var validationManager = RegistrationValidationManager(service: RegistrationValidationService())

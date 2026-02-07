@@ -11,9 +11,9 @@ import GoogleSignIn
 import SwiftUI
 
 struct AuthenticationRootView: View {
-    @Environment(AuthManager.self) private var authManager
-    @Environment(UserManager.self) private var userManager
-    
+    @Environment(\.authManager.self) private var authManager
+    @Environment(\.userManager.self) private var userManager
+
     @State private var router = AuthenticationRouter()
     @State private var dataStore = AuthDataStore()
     
@@ -75,7 +75,7 @@ struct AuthenticationRootView: View {
                         .font(.footnote)
                         .foregroundStyle(.gray)
                         
-                        Button { router.showLogin() } label: {
+                        Button { router.path.append(.login(.loginView)) } label: {
                             HStack(spacing: 2) {
                                 Text("Have an account already?")
                                     .foregroundStyle(.gray)
@@ -109,9 +109,12 @@ struct AuthenticationRootView: View {
                         oAuthRoute.destination
                     }
                 }
-                .environment(router)
-                .environment(dataStore)
+                .environment(\.authRouter, router)
+                .environment(\.authDataStore, dataStore)
             }
+        }
+        .onChange(of: router.path) { oldValue, newValue in
+            print("DEBUG: Path is \(newValue)")
         }
     }
 }

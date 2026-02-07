@@ -1,19 +1,13 @@
 //
-//  GoogleAuthServiceProtocol.swift
+//  GoogleAuthService.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-
-import Foundation
 import Firebase
 import FirebaseAuth
 import GoogleSignIn
-
-protocol GoogleAuthServiceProtocol {
-    func signIn() async throws -> XGoogleAuthUser
-}
 
 struct GoogleAuthService: GoogleAuthServiceProtocol {
     func signIn() async throws -> XGoogleAuthUser {

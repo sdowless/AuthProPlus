@@ -8,14 +8,30 @@
 
 import SwiftUI
 
+/// A reusable text input field with optional validation UI.
+///
+/// Supports secure text entry, a floating title label, and inline validation feedback
+/// via `InputValidationState` (progress, invalid, validated) and an optional error message.
 struct FormInputField: View {
+    /// The bound text value for the input.
     @Binding private var text: String
     
+    /// The placeholder and floating title text.
     private let titleKey: String
+    /// The current validation state used to drive inline indicators.
     private let validationState: InputValidationState
+    /// An optional error message shown when `validationState` is `.invalid`.
     private let errorMessage: String?
+    /// Whether the field should obscure input (e.g., for passwords).
     private let isSecureField: Bool
     
+    /// Creates a form input field.
+    /// - Parameters:
+    ///   - titleKey: The placeholder and floating title text.
+    ///   - validationState: The validation state that controls inline indicators. Defaults to `.idle`.
+    ///   - errorMessage: An optional error message displayed when the state is `.invalid`.
+    ///   - isSecureField: Whether to obscure input (secure entry). Defaults to `false`.
+    ///   - text: A binding to the text value.
     init(
         _ titleKey: String,
         validationState: InputValidationState = .idle,
@@ -31,6 +47,7 @@ struct FormInputField: View {
         self.isSecureField = isSecureField
     }
     
+    /// The field content, including floating label, input, divider, and optional validation UI.
     var body: some View {
         ZStack(alignment: .trailing) {
             VStack(alignment: .leading) {
@@ -49,7 +66,7 @@ struct FormInputField: View {
                         }
                     }
                     .font(.subheadline)
-                    .padding(.vertical, 8)
+                    .padding(.top, 4)
 
                     Spacer()
                     
@@ -98,3 +115,4 @@ struct FormInputField: View {
     }
     .padding()
 }
+

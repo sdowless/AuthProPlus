@@ -7,14 +7,29 @@
 
 import SwiftUI
 
+/// A configurable capsule-style button appearance used across the app.
+///
+/// The style supports semantic rank, size, icon layout, and variant options to create
+/// consistent button appearances for primary, secondary, and tertiary actions.
 struct XStandardButtonStyle: ButtonStyle {
+    /// The current color scheme, used to adapt border contrast.
     @Environment(\.colorScheme) var colorScheme
     
+    /// Emphasis rank that controls foreground, background, and border treatment.
     private var rank: XButtonRank
+    /// Size semantics that control height, width, padding, and typography.
     private var size: XButtonSize
+    /// Icon placement relative to the title (if present).
     private var iconLayout: XButtonIconLayout
+    /// Visual variant that selects between system and branded backgrounds.
     private var variant: XButtonVariant = .system
     
+    /// Creates a standard button style.
+    /// - Parameters:
+    ///   - rank: The emphasis rank (primary, secondary, tertiary).
+    ///   - size: The size semantics (compact, standard).
+    ///   - iconLayout: The icon placement relative to the title.
+    ///   - variant: The visual variant (system or primary).
     init(rank: XButtonRank, size: XButtonSize, iconLayout: XButtonIconLayout, variant: XButtonVariant) {
         self.rank = rank
         self.size = size
@@ -22,6 +37,7 @@ struct XStandardButtonStyle: ButtonStyle {
         self.variant = variant
     }
     
+    /// Creates the styled button body for the given configuration.
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(size == .compact ? .subheadline : .headline)
@@ -40,6 +56,7 @@ struct XStandardButtonStyle: ButtonStyle {
 }
 
 private extension XStandardButtonStyle {
+    /// The background color resolved from the current variant and rank.
     var backgroundColor: Color {
         switch variant {
         case .primary:
@@ -56,6 +73,7 @@ private extension XStandardButtonStyle {
         }
     }
     
+    /// The border stroke color; typically clear for branded variant.
     var borderColor: Color {
         guard variant == .system else { return .clear }
         
@@ -69,6 +87,7 @@ private extension XStandardButtonStyle {
         }
     }
     
+    /// The foreground (text/icon) color resolved from variant and rank.
     var foregroundColor: Color {
         switch variant {
         case .primary:
@@ -83,6 +102,7 @@ private extension XStandardButtonStyle {
         }
     }
     
+    /// The fixed width for certain combinations; nil means size to fit.
     var width: CGFloat? {
         switch size {
         case .compact:
@@ -97,6 +117,7 @@ private extension XStandardButtonStyle {
         }
     }
     
+    /// The fixed height for certain combinations; nil means size to fit.
     var height: CGFloat? {
         switch size {
         case .compact:
@@ -113,6 +134,7 @@ private extension XStandardButtonStyle {
 }
 
 extension ButtonStyle where Self == XStandardButtonStyle {
+    /// The default standard button style (primary rank, standard size, leading icon, system variant).
     static var standard: XStandardButtonStyle {
         return XStandardButtonStyle(
             rank: .primary,
@@ -122,6 +144,12 @@ extension ButtonStyle where Self == XStandardButtonStyle {
         )
     }
     
+    /// Creates a standard button style with configurable parameters.
+    /// - Parameters:
+    ///   - rank: The emphasis rank. Defaults to `.primary`.
+    ///   - size: The size semantics. Defaults to `.standard`.
+    ///   - iconLayout: The icon placement. Defaults to `.leading`.
+    ///   - variant: The visual variant. Defaults to `.system`.
     static func standard(
         rank: XButtonRank = .primary,
         size: XButtonSize = .standard,

@@ -8,11 +8,29 @@
 import Kingfisher
 import SwiftUI
 
+/// A circular avatar view that renders a user's profile image or a provided image at a given size.
+///
+/// The view prefers the user's remote profile image (if available), otherwise falls back to a provided
+/// `Image`, and finally to a system placeholder. The avatar is always rendered as a circle and sized
+/// using the provided `AvatarSize`.
+///
+/// Example:
+/// ```swift
+/// AvatarView(user: currentUser, size: .small)
+/// AvatarView(image: Image("local-avatar"), size: .large)
+/// ```
 struct AvatarView: View {
+    /// The user whose profile image URL is used if available.
     private let user: User?
+    /// An optional local image to display when no remote user image is available.
     private let image: Image?
+    /// The semantic avatar size that determines the square dimension.
     private let size: AvatarSize
     
+    /// Creates an avatar view that attempts to load the user's remote profile image.
+    /// - Parameters:
+    ///   - user: The user whose profile image URL will be used if present.
+    ///   - size: The semantic size used to determine avatar dimensions.
     init(user: User?, size: AvatarSize) {
         self.user = user
         self.size = size
@@ -20,6 +38,10 @@ struct AvatarView: View {
         self.image = nil
     }
     
+    /// Creates an avatar view with a provided local image.
+    /// - Parameters:
+    ///   - image: A local image to display when no remote user image is provided.
+    ///   - size: The semantic size used to determine avatar dimensions.
     init(image: Image?, size: AvatarSize) {
         self.image = image
         self.size = size
@@ -28,6 +50,7 @@ struct AvatarView: View {
     }
     
     var body: some View {
+        // Display precedence: user remote image > provided local image > system placeholder. Always circular.
         if let imageUrl = user?.profileImageUrl {
             KFImage(URL(string: imageUrl))
                 .resizable()

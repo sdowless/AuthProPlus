@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(AuthManager.self) private var authManager
-    @Environment(UserManager.self) private var userManager
-    
+    @Environment(\.authManager.self) private var authManager
+    @Environment(\.userManager.self) private var userManager
+
     var body: some View {
         Group {
             switch authManager.authState {
@@ -40,7 +40,6 @@ struct ContentView: View {
         .task(id: authManager.authState) {
             guard authManager.authState == .authenticated else { return }
             await userManager.fetchCurrentUser()
-//            authManager.signOut()
         }
     }
 }

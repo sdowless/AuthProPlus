@@ -55,6 +55,10 @@ class AuthManager: NSObject {
         }
     }
     
+    func sendResetPasswordLink(toEmail email: String) async throws {
+        try await service.sendResetPasswordLink(toEmail: email)
+    }
+    
     func signUp(withEmail email: String, password: String, username: String, fullname: String) async throws {
         self.currentUser = try await service.createUser(
             withEmail: email,
@@ -62,8 +66,6 @@ class AuthManager: NSObject {
             username: username,
             fullname: fullname
         )
-        
-        print("DEBUG: Current user id is \(currentUser?.id)")
     }
     
     func signInWithGoogle() async {
@@ -134,6 +136,7 @@ extension AuthManager: ASAuthorizationControllerDelegate {
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        self.error = .apple(.unknown)
         print("DEBUG: Failed with error: \(error)")
     }
 }

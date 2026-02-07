@@ -7,7 +7,12 @@
 
 import SwiftUI
 
+/// A circular floating button style with a branded background and drop shadow.
+///
+/// Applies a large icon scale, white foreground, and a circular primary-blue background
+/// with a subtle shadow. Intended for prominent actions that float above content.
 struct XFloatingButtonStyle: ButtonStyle {
+    /// Creates the styled button body for the given configuration.
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .imageScale(.large)
@@ -23,7 +28,17 @@ struct XFloatingButtonStyle: ButtonStyle {
     }
 }
 
+/// Convenience API for applying the floating button style.
+///
+/// Example:
+/// ```swift
+/// Button(action: createPost) {
+///     Image(systemName: "plus")
+/// }
+/// .buttonStyle(.floating)
+/// ```
 extension ButtonStyle where Self == XFloatingButtonStyle {
+    /// A convenience static value to apply `XFloatingButtonStyle` using `.buttonStyle(.floating)`.
     static var floating: XFloatingButtonStyle {
         .init()
     }

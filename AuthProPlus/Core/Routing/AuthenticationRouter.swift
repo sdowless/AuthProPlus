@@ -5,7 +5,6 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-
 import Observation
 
 @Observable
@@ -17,9 +16,20 @@ class AuthenticationRouter {
         path.append(.accountCreation(firstStep))
     }
     
+    init() {
+        print("DEBUG: Did init..")
+    }
+    
     func showLogin() {
         path.removeAll()
         path.append(.login(.loginView))
+        print("DEBUG: Path: \(path)")
+    }
+    
+    func showResetPassword() {
+        print("DEBUG: Called")
+        path.append(.login(.resetPassword))
+        print("DEBUG: Path: \(path)")
     }
     
     func showUsernameViewAfterOAuth() {
@@ -39,8 +49,6 @@ class AuthenticationRouter {
         case .passwordView:
             path.append(.accountCreation(.profilePhotoSelectionView))
         case .profilePhotoSelectionView:
-            path.append(.accountCreation(.profileHeaderPhotoSelectionView))
-        case .profileHeaderPhotoSelectionView:
             path.append(.accountCreation(.completionView))
         case .completionView:
             path.removeAll()

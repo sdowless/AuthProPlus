@@ -7,10 +7,14 @@
 
 import Foundation
 
+/// Visual styling variants for `XButton`.
+///
+/// Use these variants to apply a consistent background and foreground treatment
+/// across the app's buttons.
 enum XButtonVariant {
-    /// Adds primary app as background color
+    /// Uses the app's primary brand color as the background; foreground adapts for contrast.
     case primary
     
-    /// Adds a system background color
+    /// Uses a system background treatment appropriate for the current appearance.
     case system
 }

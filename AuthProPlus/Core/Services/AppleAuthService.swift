@@ -10,6 +10,8 @@ import CryptoKit
 import FirebaseAuth
 
 struct AppleAuthService {
+    private let userService: UserServiceProtocol = UserService()
+    
     func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> XAppleAuthUser {
         guard let appleIDToken = appleIDCredential.identityToken else {
             throw AppleAuthError.invalidIdentityToken
@@ -36,8 +38,7 @@ struct AppleAuthService {
             throw AppleAuthError.authorizationFailed(underlying: error)
         }
         
-        let isNewUser = firebaseAuthResult.additionalUserInfo?.isNewUser ?? false
-        
+        let existingUser = try await userService.fetchUser(withUid: firebaseAuthResult.user.uid)
         var name: String?
         
         if let nameComponents = appleIDCredential.fullName {
@@ -48,9 +49,9 @@ struct AppleAuthService {
         
         return XAppleAuthUser(
             id: firebaseAuthResult.user.uid,
-            isNewUser: isNewUser,
             email: appleIDCredential.email ?? firebaseAuthResult.user.email,
-            fullname: name
+            fullname: name,
+            username: existingUser?.username ?? ""
         )
     }
     

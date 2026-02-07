@@ -7,7 +7,22 @@
 
 import Foundation
 
+/// Name-related utilities for `String`.
 extension String {
+    /// Returns true if the string matches a simple personal-name pattern.
+    ///
+    /// Allows letters (including many Latin diacritics), spaces, apostrophes, and hyphens.
+    /// Disallows digits and most punctuation.
+    ///
+    /// Examples:
+    /// ```swift
+    /// "Ana María".isValidName()   // true
+    /// "O'Connor".isValidName()    // true
+    /// "Jean-Luc".isValidName()    // true
+    /// "John3".isValidName()       // false
+    /// "Mr. Smith".isValidName()   // false
+    /// ```
+    /// - Returns: `true` if the string matches the allowed name pattern; otherwise, `false`.
     func isValidName() -> Bool {
         let nameRegex = "^[a-zA-Zà-ÿÀ-Ÿ'\\-\\s]+$"
         
@@ -15,3 +30,4 @@ extension String {
         return namePred.evaluate(with: self)
     }
 }
+

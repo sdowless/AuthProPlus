@@ -5,7 +5,6 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-
 import SwiftUI
 
 enum AuthenticationRoutes: Hashable {
@@ -14,15 +13,17 @@ enum AuthenticationRoutes: Hashable {
     case oAuth(OAuthRoutes)
 }
 
-
 enum LoginRoutes: Int, Hashable {
     case loginView
+    case resetPassword
     
     @ViewBuilder
     var destination: some View {
         switch self {
         case .loginView:
             LoginView()
+        case .resetPassword:
+            PasswordResetView()
         }
     }
 }
@@ -31,7 +32,6 @@ enum AccountCreationRoutes: Int, Hashable {
     case userInformationView
     case passwordView
     case profilePhotoSelectionView
-    case profileHeaderPhotoSelectionView
     case completionView
     
     @ViewBuilder
@@ -43,8 +43,6 @@ enum AccountCreationRoutes: Int, Hashable {
             CreatePasswordView()
         case .profilePhotoSelectionView:
             ProfileImageSelectorView()
-        case .profileHeaderPhotoSelectionView:
-            ProfileHeaderImageSelectorView()
         case .completionView:
             AccountCreationCompletionView()
         }
