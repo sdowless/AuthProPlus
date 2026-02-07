@@ -13,7 +13,7 @@ import Foundation
 enum ASButtonIconLayout {
     /// Adds a trailing chevron icon.
     ///
-    /// - Important: A chevron will only be added if the button's rank is ``XButtonRank/tertiary``.
+    /// - Important: A chevron will only be added if the button's rank is ``ASButtonRank/tertiary``.
     case chevron
     
     /// Places the icon to the left of the button's title.

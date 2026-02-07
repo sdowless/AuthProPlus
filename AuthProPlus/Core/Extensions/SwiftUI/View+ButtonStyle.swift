@@ -23,7 +23,7 @@ extension View {
     ///
     /// Example:
     /// ```swift
-    /// XButton("Login") { login() }
+    /// ASButton("Login") { login() }
     ///     .buttonStyle(.standard, isLoading: $isAuthenticating)
     /// ```
     func buttonStyle<S: ButtonStyle>(_ style: S, isLoading: Binding<Bool>) -> some View {

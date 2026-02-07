@@ -38,7 +38,7 @@ private struct UserManagerKey: EnvironmentKey {
 extension EnvironmentValues {
     /// A binding that indicates whether an operation is in progress.
     ///
-    /// Used by button styles (e.g., `XButton`'s `.standard`) to show a `ProgressView`
+    /// Used by button styles (e.g., `ASButton`'s `.standard`) to show a `ProgressView`
     /// or adjust visual state while actions are running.
     var isLoading: Binding<Bool> {
         get { self[LoadingKey.self] }
