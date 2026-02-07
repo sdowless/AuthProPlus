@@ -68,7 +68,7 @@ struct XButton: View {
             HStack(spacing: 6) {
                 Group {
                     if isLoading.wrappedValue {
-                        ProgressView()
+                        LoadingIndicator()
                             .tint(.black)
                     } else {
                         if let imageResource {
@@ -94,5 +94,15 @@ struct XButton: View {
 }
 
 #Preview {
-    XButton("Next", action: {})
+    @Previewable @State var isLoading = false
+    
+    XButton("Next") {
+        Task {
+            isLoading = true
+            try? await Task.sleep(for: .seconds(2))
+            isLoading = false
+        }
+        
+    }
+    .buttonStyle(.standard, isLoading: $isLoading)
 }

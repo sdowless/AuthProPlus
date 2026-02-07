@@ -9,12 +9,6 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
-protocol AppleAuthServiceProtocol {
-    func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser
-    func randomNonceString(length: Int) -> String
-    func sha256(_ input: String) -> String
-}
-
 struct AppleAuthService: AppleAuthServiceProtocol {
     private let userService: UserServiceProtocol = UserService()
     
