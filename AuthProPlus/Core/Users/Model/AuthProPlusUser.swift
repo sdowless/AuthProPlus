@@ -18,7 +18,7 @@ extension BaseUser {
     var requiresUsername: Bool { username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 }
 
-struct User: BaseUser, Codable {
+struct AuthProPlusUser: BaseUser, Codable {
     let id: String
     var username: String
     var profileImageUrl: String?

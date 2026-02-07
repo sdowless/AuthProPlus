@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GoogleAuthServiceProtocol {
-    func signIn() async throws -> XGoogleAuthUser
+    func signIn() async throws -> GoogleAuthUser
 }

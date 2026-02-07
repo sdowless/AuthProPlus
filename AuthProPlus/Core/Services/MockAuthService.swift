@@ -13,7 +13,7 @@ struct MockAuthService: AuthServiceProtocol {
         
     }
     
-    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> User {
+    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> AuthProPlusUser {
         try await Task.sleep(for: .seconds(1))
         return MockData.currentUser
     }
@@ -41,8 +41,8 @@ struct MockAuthService: AuthServiceProtocol {
 }
 
 struct MockGoogleAuthService: GoogleAuthServiceProtocol {
-    func signIn() async throws -> XGoogleAuthUser {
+    func signIn() async throws -> GoogleAuthUser {
         try await Task.sleep(for: .seconds(1))
-        return XGoogleAuthUser(id: UUID().uuidString, isNewUser: true, userProfileData: GIDProfileData())
+        return GoogleAuthUser(id: UUID().uuidString, userProfileData: GIDProfileData())
     }
 }

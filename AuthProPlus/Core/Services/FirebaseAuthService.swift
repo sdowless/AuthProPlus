@@ -10,10 +10,10 @@ import FirebaseAuth
 import Firebase
 
 struct FirebaseAuthService: AuthServiceProtocol {
-    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> User {
+    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> AuthProPlusUser {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
-            return User(
+            return AuthProPlusUser(
                 id: result.user.uid,
                 username: username,
                 fullname: fullname,

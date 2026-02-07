@@ -10,7 +10,7 @@ import FirebaseAuth
 import GoogleSignIn
 
 struct GoogleAuthService: GoogleAuthServiceProtocol {
-    func signIn() async throws -> XGoogleAuthUser {
+    func signIn() async throws -> GoogleAuthUser {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             throw GoogleAuthError.invalidClientID
         }
@@ -33,11 +33,9 @@ struct GoogleAuthService: GoogleAuthServiceProtocol {
         let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: googleUser.accessToken.tokenString)
         
         let firebaseAuthResult = try await Auth.auth().signIn(with: credential)
-        let isNewUser = firebaseAuthResult.additionalUserInfo?.isNewUser ?? false
         
-        return XGoogleAuthUser(
+        return GoogleAuthUser(
             id: firebaseAuthResult.user.uid,
-            isNewUser: isNewUser,
             userProfileData: googleUser.profile ?? GIDProfileData()
         )
     }

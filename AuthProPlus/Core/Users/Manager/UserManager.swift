@@ -11,7 +11,7 @@ import Foundation
 
 @Observable
 class UserManager {
-    var currentUser: User?
+    var currentUser: AuthProPlusUser?
     var loadingState: ContentLoadingState = .loading
     
     private let service: UserServiceProtocol

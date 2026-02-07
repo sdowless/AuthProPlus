@@ -11,11 +11,11 @@ import Foundation
 class MockUserService: UserServiceProtocol {
     var currentUser = MockData.currentUser
     
-    func fetchCurrentUser() async throws -> User? {
+    func fetchCurrentUser() async throws -> AuthProPlusUser? {
         return currentUser
     }
     
-    func fetchUser(withUid uid: String) async throws -> User? {
+    func fetchUser(withUid uid: String) async throws -> AuthProPlusUser? {
         return currentUser
     }
     

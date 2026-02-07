@@ -8,7 +8,7 @@
 import Foundation
 
 struct MockData {
-    static var currentUser = User(
+    static var currentUser = AuthProPlusUser(
         id: UUID().uuidString,
         username: "test_user",
         email: "test@gmail.com",

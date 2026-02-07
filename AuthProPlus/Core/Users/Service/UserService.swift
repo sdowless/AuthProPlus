@@ -9,8 +9,8 @@ import FirebaseAuth
 import FirebaseFirestore
 
 protocol UserServiceProtocol {
-    func fetchCurrentUser() async throws -> User?
-    func fetchUser(withUid uid: String) async throws -> User?
+    func fetchCurrentUser() async throws -> AuthProPlusUser?
+    func fetchUser(withUid uid: String) async throws -> AuthProPlusUser?
     func updateUsername(_ username: String) async throws
     func updateProfilePhoto(_ imageData: Data) async throws -> String
     func updateProfileHeaderPhoto(_ imageData: Data) async throws -> String
@@ -20,19 +20,19 @@ protocol UserServiceProtocol {
 struct UserService: UserServiceProtocol {
     private let imageUploader = ImageUploader()
     
-    func fetchCurrentUser() async throws -> User? {
+    func fetchCurrentUser() async throws -> AuthProPlusUser? {
         guard let uid = Auth.auth().currentUser?.uid else { return nil }
                 
         return try await FirestoreConstants
             .UserCollection
             .document(uid)
-            .getDocument(as: User.self)
+            .getDocument(as: AuthProPlusUser.self)
     }
     
-    func fetchUser(withUid uid: String) async throws -> User? {
+    func fetchUser(withUid uid: String) async throws -> AuthProPlusUser? {
         return try? await FirestoreConstants
             .UserCollection.document(uid)
-            .getDocument(as: User.self)
+            .getDocument(as: AuthProPlusUser.self)
     }
     
     func updateUsername(_ username: String) async throws {
@@ -55,7 +55,7 @@ struct UserService: UserServiceProtocol {
     }
     
     func saveUserDataAfterAuthentication(_ baseUser: any BaseUser) async throws {
-        let user = User(
+        let user = AuthProPlusUser(
             id: baseUser.id,
             username: baseUser.username,
             email: baseUser.email,

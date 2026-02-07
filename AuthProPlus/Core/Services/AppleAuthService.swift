@@ -12,7 +12,7 @@ import FirebaseAuth
 struct AppleAuthService {
     private let userService: UserServiceProtocol = UserService()
     
-    func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> XAppleAuthUser {
+    func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser {
         guard let appleIDToken = appleIDCredential.identityToken else {
             throw AppleAuthError.invalidIdentityToken
         }
@@ -47,7 +47,7 @@ struct AppleAuthService {
             name = formatter.string(from: nameComponents)
         }
         
-        return XAppleAuthUser(
+        return AppleAuthUser(
             id: firebaseAuthResult.user.uid,
             email: appleIDCredential.email ?? firebaseAuthResult.user.email,
             fullname: name,

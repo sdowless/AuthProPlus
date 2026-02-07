@@ -21,7 +21,7 @@ protocol AuthServiceProtocol {
     ///   - fullname: The user's full name.
     /// - Returns: The created `User` model.
     /// - Throws: An error if user creation fails.
-    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> User
+    func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> AuthProPlusUser
     
     /// Deletes the current user's account.
     /// - Throws: An error if the account cannot be deleted.

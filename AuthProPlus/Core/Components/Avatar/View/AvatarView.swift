@@ -21,7 +21,7 @@ import SwiftUI
 /// ```
 struct AvatarView: View {
     /// The user whose profile image URL is used if available.
-    private let user: User?
+    private let user: AuthProPlusUser?
     /// An optional local image to display when no remote user image is available.
     private let image: Image?
     /// The semantic avatar size that determines the square dimension.
@@ -31,7 +31,7 @@ struct AvatarView: View {
     /// - Parameters:
     ///   - user: The user whose profile image URL will be used if present.
     ///   - size: The semantic size used to determine avatar dimensions.
-    init(user: User?, size: AvatarSize) {
+    init(user: AuthProPlusUser?, size: AvatarSize) {
         self.user = user
         self.size = size
         

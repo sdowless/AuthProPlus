@@ -9,9 +9,8 @@
 import Foundation
 import GoogleSignIn
 
-struct XGoogleAuthUser: BaseUser {
+struct GoogleAuthUser: BaseUser {
     let id: String
-    let isNewUser: Bool
     let userProfileData: GIDProfileData
 
     var username: String { "" }

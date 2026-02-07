@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct XAppleAuthUser: BaseUser {
+struct AppleAuthUser: BaseUser {
     let id: String
     let email: String?
     let fullname: String?
