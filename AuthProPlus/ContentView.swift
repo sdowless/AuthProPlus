@@ -28,7 +28,7 @@ struct ContentView: View {
                     VStack {
                         Text("Your home screen goes here!")
                         
-                        XButton("Sign Out") {
+                        ASButton("Sign Out") {
                             authManager.signOut()
                         }
                         .buttonStyle(.standard)

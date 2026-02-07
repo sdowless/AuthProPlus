@@ -1,6 +1,6 @@
 //
 //  AddProfilePictureView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -34,10 +34,10 @@ struct ProfileImageSelectorView: View {
             
             PhotosPicker(selection: $selectedPickerItem) {
                 if let profileImage = store.profileImage {
-                    AvatarView(image: profileImage, size: .custom(200))
+                    ASAvatarView(image: profileImage, size: .custom(200))
                 } else {
                     ZStack(alignment: .bottomTrailing) {
-                        AvatarView(user: nil, size: .custom(200))
+                        ASAvatarView(user: nil, size: .custom(200))
                         
                         Image(systemName: "plus.circle.fill")
                             .resizable()
@@ -56,7 +56,7 @@ struct ProfileImageSelectorView: View {
             Spacer()
             
             VStack(spacing: 24) {
-                XButton("Next") {
+                ASButton("Next") {
                     uploadProfilePhoto()
                 }
                 .buttonStyle(.standard, isLoading: $isUploadingPhoto)

@@ -1,6 +1,6 @@
 //
 //  RegistrationValidationError.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //

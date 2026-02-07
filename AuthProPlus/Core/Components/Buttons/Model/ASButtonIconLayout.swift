@@ -1,16 +1,16 @@
 //
-//  XButtonIconLayout.swift
-//  XClone
+//  ASButtonIconLayout.swift
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
 
 import Foundation
 
-/// Layout options for placing an icon within `XButton`.
+/// Layout options for placing an icon within `ASButton`.
 ///
 /// These options control whether and where an icon appears relative to the button's title.
-enum XButtonIconLayout {
+enum ASButtonIconLayout {
     /// Adds a trailing chevron icon.
     ///
     /// - Important: A chevron will only be added if the button's rank is ``XButtonRank/tertiary``.

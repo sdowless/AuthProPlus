@@ -1,6 +1,6 @@
 //
-//  XStandardButtonStyle.swift
-//  XClone
+//  ASButtonStyle.swift
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -11,18 +11,18 @@ import SwiftUI
 ///
 /// The style supports semantic rank, size, icon layout, and variant options to create
 /// consistent button appearances for primary, secondary, and tertiary actions.
-struct XStandardButtonStyle: ButtonStyle {
+struct ASButtonStyle: ButtonStyle {
     /// The current color scheme, used to adapt border contrast.
     @Environment(\.colorScheme) var colorScheme
     
     /// Emphasis rank that controls foreground, background, and border treatment.
-    private var rank: XButtonRank
+    private var rank: ASButtonRank
     /// Size semantics that control height, width, padding, and typography.
-    private var size: XButtonSize
+    private var size: ASButtonSize
     /// Icon placement relative to the title (if present).
-    private var iconLayout: XButtonIconLayout
+    private var iconLayout: ASButtonIconLayout
     /// Visual variant that selects between system and branded backgrounds.
-    private var variant: XButtonVariant = .system
+    private var variant: ASButtonVariant = .system
     
     /// Creates a standard button style.
     /// - Parameters:
@@ -30,7 +30,7 @@ struct XStandardButtonStyle: ButtonStyle {
     ///   - size: The size semantics (compact, standard).
     ///   - iconLayout: The icon placement relative to the title.
     ///   - variant: The visual variant (system or primary).
-    init(rank: XButtonRank, size: XButtonSize, iconLayout: XButtonIconLayout, variant: XButtonVariant) {
+    init(rank: ASButtonRank, size: ASButtonSize, iconLayout: ASButtonIconLayout, variant: ASButtonVariant) {
         self.rank = rank
         self.size = size
         self.iconLayout = iconLayout
@@ -55,7 +55,7 @@ struct XStandardButtonStyle: ButtonStyle {
     }
 }
 
-private extension XStandardButtonStyle {
+private extension ASButtonStyle {
     /// The background color resolved from the current variant and rank.
     var backgroundColor: Color {
         switch variant {
@@ -133,10 +133,10 @@ private extension XStandardButtonStyle {
     }
 }
 
-extension ButtonStyle where Self == XStandardButtonStyle {
+extension ButtonStyle where Self == ASButtonStyle {
     /// The default standard button style (primary rank, standard size, leading icon, system variant).
-    static var standard: XStandardButtonStyle {
-        return XStandardButtonStyle(
+    static var standard: ASButtonStyle {
+        return ASButtonStyle(
             rank: .primary,
             size: .standard,
             iconLayout: .leading,
@@ -151,10 +151,10 @@ extension ButtonStyle where Self == XStandardButtonStyle {
     ///   - iconLayout: The icon placement. Defaults to `.leading`.
     ///   - variant: The visual variant. Defaults to `.system`.
     static func standard(
-        rank: XButtonRank = .primary,
-        size: XButtonSize = .standard,
-        iconLayout: XButtonIconLayout = .leading,
-        variant: XButtonVariant = .system
+        rank: ASButtonRank = .primary,
+        size: ASButtonSize = .standard,
+        iconLayout: ASButtonIconLayout = .leading,
+        variant: ASButtonVariant = .system
     ) -> Self {
         .init(rank: rank, size: size, iconLayout: iconLayout, variant: variant)
     }

@@ -1,6 +1,6 @@
 //
 //  AvatarSize.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/26/25.
 //

@@ -1,5 +1,5 @@
 //
-//  LoadingIndicator.swift
+//  ASLoadingIndicator.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/7/26.
@@ -13,7 +13,7 @@ import SwiftUI
 /// The indicator renders a stroked circular arc whose sweep length grows and
 /// shrinks while the whole shape rotates. The rotation speed is modulated over
 /// time to avoid a perfectly constant spin, giving it a more organic feel.
-struct LoadingIndicator: View {
+struct ASLoadingIndicator: View {
     /// The diameter of the spinner in points.
     let size: CGFloat
     /// The stroke width of the spinner.
@@ -44,7 +44,7 @@ struct LoadingIndicator: View {
     }
 }
 
-private extension LoadingIndicator {
+private extension ASLoadingIndicator {
     // Produces a rotation angle (in degrees) with a varying rate over time.
     func rotationAngle(time t: TimeInterval) -> Double {
         // Base rotation: full turn every 1.2 seconds
@@ -72,8 +72,8 @@ private extension LoadingIndicator {
 
 #Preview {
     VStack(spacing: 24) {
-        LoadingIndicator()
-        LoadingIndicator(size: 48, lineWidth: 6, color: .primaryBlue)
+        ASLoadingIndicator()
+        ASLoadingIndicator(size: 48, lineWidth: 6, color: .primaryBlue)
     }
     .padding()
 }

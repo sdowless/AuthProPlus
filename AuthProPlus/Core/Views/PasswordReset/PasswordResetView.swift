@@ -36,7 +36,7 @@ struct PasswordResetView: View {
             .padding(.top)
 
             VStack(spacing: 20) {
-                FormInputField("Email", text: $store.email)
+                ASFormInputField("Email", text: $store.email)
                     .textInputAutocapitalization(.never)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -45,7 +45,7 @@ struct PasswordResetView: View {
 
             Spacer()
 
-            XButton("Send reset link") {
+            ASButton("Send reset link") {
                 sendReset()
             }
             .buttonStyle(.standard, isLoading: $isSending)

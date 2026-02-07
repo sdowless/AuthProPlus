@@ -24,8 +24,8 @@ struct AuthProPlusApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(authManager)
-                .environment(userManager)
+                .environment(\.authManager, authManager)
+                .environment(\.userManager, userManager)
         }
     }
 }

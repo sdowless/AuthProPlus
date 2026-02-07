@@ -1,6 +1,6 @@
 //
 //  AccountCreationCompletionView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/29/25.
 //
@@ -29,7 +29,7 @@ struct AccountCreationCompletionView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
             
-            XButton("Complete Sign Up") {
+            ASButton("Complete Sign Up") {
                 authManager.updateAuthState(.authenticated)
             }
             .buttonStyle(.standard)

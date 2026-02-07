@@ -1,6 +1,6 @@
 //
-//  AvatarView.swift
-//  XClone
+//  ASAvatarView.swift
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/26/25.
 //
@@ -19,7 +19,7 @@ import SwiftUI
 /// AvatarView(user: currentUser, size: .small)
 /// AvatarView(image: Image("local-avatar"), size: .large)
 /// ```
-struct AvatarView: View {
+struct ASAvatarView: View {
     /// The user whose profile image URL is used if available.
     private let user: AuthProPlusUser?
     /// An optional local image to display when no remote user image is available.
@@ -74,5 +74,5 @@ struct AvatarView: View {
 }
 
 #Preview {
-    AvatarView(user: MockData.currentUser, size: .medium)
+    ASAvatarView(user: MockData.currentUser, size: .medium)
 }

@@ -35,12 +35,12 @@ struct AuthenticationRootView: View {
                 
                 VStack(spacing: 12) {
                     
-                    XButton("Continue with Google", imageResource: .googleIcon) {
+                    ASButton("Continue with Google", imageResource: .googleIcon) {
                         signInWithGoogle()
                     }
                     .buttonStyle(.standard(rank: .secondary))
 
-                    XButton("Continue with Apple", systemImage: "apple.logo") {
+                    ASButton("Continue with Apple", systemImage: "apple.logo") {
                         signInwithApple()
                     }
                     .buttonStyle(.standard(rank: .secondary))
@@ -58,7 +58,7 @@ struct AuthenticationRootView: View {
                     .foregroundStyle(.secondary)
                     .padding(.horizontal)
                     
-                    XButton("Create Account") {
+                    ASButton("Create Account") {
                         router.startAccountCreationFlow()
                     }
                     .buttonStyle(.standard(rank: .secondary))

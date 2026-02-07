@@ -1,6 +1,6 @@
 //
 //  LoginView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -21,19 +21,19 @@ struct LoginView: View {
             XLogoImageView()
             
             VStack(spacing: 20) {
-                FormInputField("Email", text: $store.email)
+                ASFormInputField("Email", text: $store.email)
                     .textInputAutocapitalization(.never)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                 
-                FormInputField("Password", isSecureField: true, text: $store.password)
+                ASFormInputField("Password", isSecureField: true, text: $store.password)
             }
             .padding(.vertical, 24)
             
             Spacer()
             
             VStack(spacing: 20) {
-                XButton("Login") {
+                ASButton("Login") {
                     login()
                 }
                 .buttonStyle(.standard, isLoading: $isAuthenticating)

@@ -1,6 +1,6 @@
 //
-//  XButton.swift
-//  XClone
+//  ASButton.swift
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -13,7 +13,7 @@ import SwiftUI
 /// in place of its content to indicate a pending action.
 ///
 /// You can create buttons with a local image resource, a system symbol name, or just a title.
-struct XButton: View {
+struct ASButton: View {
     /// Controls loading state; when true, the button shows a progress indicator.
     @Environment(\.isLoading) var isLoading
 
@@ -68,8 +68,7 @@ struct XButton: View {
             HStack(spacing: 6) {
                 Group {
                     if isLoading.wrappedValue {
-                        LoadingIndicator()
-                            .tint(.black)
+                        ASLoadingIndicator(color: .black)
                     } else {
                         if let imageResource {
                             Image(imageResource)
@@ -96,7 +95,7 @@ struct XButton: View {
 #Preview {
     @Previewable @State var isLoading = false
     
-    XButton("Next") {
+    ASButton("Next") {
         Task {
             isLoading = true
             try? await Task.sleep(for: .seconds(2))

@@ -1,6 +1,6 @@
 //
 //  UIApplication+Editing.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/11/25.
 //

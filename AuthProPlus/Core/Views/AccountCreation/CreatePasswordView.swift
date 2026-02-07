@@ -1,6 +1,6 @@
 //
 //  PasswordView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -29,7 +29,7 @@ struct CreatePasswordView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 
-                FormInputField(
+                ASFormInputField(
                     "Password",
                     isSecureField: true,
                     text: $store.password
@@ -43,7 +43,7 @@ struct CreatePasswordView: View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
                 
-                XButton("Sign up") {
+                ASButton("Sign up") {
                     onSignUp()
                 }
                 .buttonStyle(.standard, isLoading: $isLoading)

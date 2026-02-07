@@ -1,6 +1,6 @@
 //
 //  RegistrationView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/27/25.
 //
@@ -28,10 +28,10 @@ struct UserInformationView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 VStack(spacing: 20) {
-                    FormInputField("Name", text: $store.name)
+                    ASFormInputField("Name", text: $store.name)
                         .textContentType(.name)
                     
-                    FormInputField(
+                    ASFormInputField(
                         "Email address",
                         validationState: emailValidation,
                         errorMessage: "This email is not valid. Please try again.",
@@ -41,7 +41,7 @@ struct UserInformationView: View {
                     .textContentType(.emailAddress)
                     .textInputAutocapitalization(.never)
                     
-                    FormInputField(
+                    ASFormInputField(
                         "Username",
                         validationState: usernameValidation,
                         errorMessage: "This username is not valid. Please try again.",
@@ -56,7 +56,7 @@ struct UserInformationView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            XButton("Next") {
+            ASButton("Next") {
                 router.pushNextAccountCreationStep()
             }
             .buttonStyle(.standard(size: .compact))

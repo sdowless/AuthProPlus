@@ -1,6 +1,6 @@
 //
 //  AddUsernameView.swift
-//  XClone
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 1/28/25.
 //
@@ -28,7 +28,7 @@ struct AddUsernameView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            FormInputField(
+            ASFormInputField(
                 "Enter username",
                 validationState: usernameValidationState,
                 errorMessage: "This username is unavailable, please try again",
@@ -39,7 +39,7 @@ struct AddUsernameView: View {
             
             Spacer()
             
-            XButton("Next") {
+            ASButton("Next") {
                 validateUsername()
             }
             .buttonStyle(.standard)

@@ -1,5 +1,5 @@
 //
-//  FormInputField.swift
+//  ASFormInputField.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/6/26.
@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// Supports secure text entry, a floating title label, and inline validation feedback
 /// via `InputValidationState` (progress, invalid, validated) and an optional error message.
-struct FormInputField: View {
+struct ASFormInputField: View {
     /// The bound text value for the input.
     @Binding private var text: String
     
@@ -100,12 +100,12 @@ struct FormInputField: View {
 
 #Preview {
     VStack(spacing: 20) {
-        FormInputField("Name", text: .constant(""))
-        FormInputField("Name", validationState: .validating, text: .constant(""))
-        FormInputField("Name", validationState: .invalid, text: .constant(""))
-        FormInputField("Name", validationState: .validated, text: .constant(""))
+        ASFormInputField("Name", text: .constant(""))
+        ASFormInputField("Name", validationState: .validating, text: .constant(""))
+        ASFormInputField("Name", validationState: .invalid, text: .constant(""))
+        ASFormInputField("Name", validationState: .validated, text: .constant(""))
         
-        FormInputField(
+        ASFormInputField(
             "Name",
             validationState: .invalid,
             errorMessage: "An error ocurred. Please try again.",

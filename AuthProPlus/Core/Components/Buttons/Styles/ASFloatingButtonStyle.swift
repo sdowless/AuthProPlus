@@ -1,6 +1,6 @@
 //
-//  XFloatingButtonStyle.swift
-//  XClone
+//  ASFloatingButtonStyle.swift
+//  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/11/25.
 //
@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// Applies a large icon scale, white foreground, and a circular primary-blue background
 /// with a subtle shadow. Intended for prominent actions that float above content.
-struct XFloatingButtonStyle: ButtonStyle {
+struct ASFloatingButtonStyle: ButtonStyle {
     /// Creates the styled button body for the given configuration.
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -37,9 +37,9 @@ struct XFloatingButtonStyle: ButtonStyle {
 /// }
 /// .buttonStyle(.floating)
 /// ```
-extension ButtonStyle where Self == XFloatingButtonStyle {
+extension ButtonStyle where Self == ASFloatingButtonStyle {
     /// A convenience static value to apply `XFloatingButtonStyle` using `.buttonStyle(.floating)`.
-    static var floating: XFloatingButtonStyle {
+    static var floating: ASFloatingButtonStyle {
         .init()
     }
 }
