@@ -9,7 +9,13 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
-struct AppleAuthService {
+protocol AppleAuthServiceProtocol {
+    func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser
+    func randomNonceString(length: Int) -> String
+    func sha256(_ input: String) -> String
+}
+
+struct AppleAuthService: AppleAuthServiceProtocol {
     private let userService: UserServiceProtocol = UserService()
     
     func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser {
@@ -84,4 +90,3 @@ struct AppleAuthService {
         return hashString
     }
 }
-

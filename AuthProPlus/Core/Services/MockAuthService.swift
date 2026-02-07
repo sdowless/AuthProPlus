@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AuthenticationServices
 import GoogleSignIn
 
 struct MockAuthService: AuthServiceProtocol {
@@ -44,5 +45,20 @@ struct MockGoogleAuthService: GoogleAuthServiceProtocol {
     func signIn() async throws -> GoogleAuthUser {
         try await Task.sleep(for: .seconds(1))
         return GoogleAuthUser(id: UUID().uuidString, userProfileData: GIDProfileData())
+    }
+}
+
+struct MockAppleAuthService: AppleAuthServiceProtocol {
+    func randomNonceString(length: Int) -> String {
+        return UUID().uuidString
+    }
+    
+    func sha256(_ input: String) -> String {
+        return UUID().uuidString
+    }
+    
+    func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser {
+        try await Task.sleep(for: .seconds(1))
+        return AppleAuthUser(id: UUID().uuidString, email: "test@gmail.com", fullname: "Test User", username: "test")
     }
 }

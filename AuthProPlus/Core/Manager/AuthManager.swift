@@ -18,14 +18,14 @@ class AuthManager: NSObject {
     
     private let service: AuthServiceProtocol
     private let googleAuthService: GoogleAuthServiceProtocol
-    private let appleAuthService: AppleAuthService
+    private let appleAuthService: AppleAuthServiceProtocol
     
     private var currentNonce: String?
     
     init(
         service: AuthServiceProtocol,
         googleAuthService: GoogleAuthServiceProtocol,
-        appleAuthService: AppleAuthService
+        appleAuthService: AppleAuthServiceProtocol
     ) {
         self.service = service
         self.googleAuthService = googleAuthService
@@ -98,7 +98,7 @@ class AuthManager: NSObject {
 
 extension AuthManager: ASAuthorizationControllerDelegate {
     func requestAppleAuthorization() {
-        let nonce = appleAuthService.randomNonceString()
+        let nonce = appleAuthService.randomNonceString(length: 32)
         self.currentNonce = nonce
         
         let appleIdProvider = ASAuthorizationAppleIDProvider()
