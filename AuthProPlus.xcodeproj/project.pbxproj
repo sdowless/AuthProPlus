@@ -1,0 +1,702 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2BDFA5A92F36978A006D4951 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5A82F36978A006D4951 /* FirebaseAuth */; };
+		2BDFA5AB2F36978A006D4951 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5AA2F36978A006D4951 /* FirebaseCore */; };
+		2BDFA5AF2F36978A006D4951 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5AE2F36978A006D4951 /* FirebaseStorage */; };
+		2BDFA5B12F36979E006D4951 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5B02F36979E006D4951 /* FirebaseFirestore */; };
+		2BDFA5B32F36979E006D4951 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5B22F36979E006D4951 /* GoogleSignIn */; };
+		2BDFA5B52F36979E006D4951 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5B42F36979E006D4951 /* GoogleSignInSwift */; };
+		2BF524352F36D13700D2A034 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2BF524342F36D13700D2A034 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BDFA37C2F3693C0006D4951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BDFA3662F3693BE006D4951 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BDFA36D2F3693BE006D4951;
+			remoteInfo = AuthProPlus;
+		};
+		2BDFA3862F3693C0006D4951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BDFA3662F3693BE006D4951 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BDFA36D2F3693BE006D4951;
+			remoteInfo = AuthProPlus;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2BDFA36E2F3693BE006D4951 /* AuthProPlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthProPlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BDFA37B2F3693C0006D4951 /* AuthProPlusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthProPlusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BDFA3852F3693C0006D4951 /* AuthProPlusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AuthProPlusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2BF524422F36F16A00D2A034 /* Exceptions for "AuthProPlus" folder in "AuthProPlus" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2BDFA36D2F3693BE006D4951 /* AuthProPlus */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2BDFA3702F3693BE006D4951 /* AuthProPlus */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2BF524422F36F16A00D2A034 /* Exceptions for "AuthProPlus" folder in "AuthProPlus" target */,
+			);
+			path = AuthProPlus;
+			sourceTree = "<group>";
+		};
+		2BDFA37E2F3693C0006D4951 /* AuthProPlusTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AuthProPlusTests;
+			sourceTree = "<group>";
+		};
+		2BDFA3882F3693C0006D4951 /* AuthProPlusUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AuthProPlusUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2BDFA36B2F3693BE006D4951 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BDFA5AF2F36978A006D4951 /* FirebaseStorage in Frameworks */,
+				2BDFA5B52F36979E006D4951 /* GoogleSignInSwift in Frameworks */,
+				2BF524352F36D13700D2A034 /* Kingfisher in Frameworks */,
+				2BDFA5AB2F36978A006D4951 /* FirebaseCore in Frameworks */,
+				2BDFA5B12F36979E006D4951 /* FirebaseFirestore in Frameworks */,
+				2BDFA5A92F36978A006D4951 /* FirebaseAuth in Frameworks */,
+				2BDFA5B32F36979E006D4951 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3782F3693C0006D4951 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3822F3693C0006D4951 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2BDFA3652F3693BE006D4951 = {
+			isa = PBXGroup;
+			children = (
+				2BDFA3702F3693BE006D4951 /* AuthProPlus */,
+				2BDFA37E2F3693C0006D4951 /* AuthProPlusTests */,
+				2BDFA3882F3693C0006D4951 /* AuthProPlusUITests */,
+				2BDFA5A72F36978A006D4951 /* Frameworks */,
+				2BDFA36F2F3693BE006D4951 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2BDFA36F2F3693BE006D4951 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2BDFA36E2F3693BE006D4951 /* AuthProPlus.app */,
+				2BDFA37B2F3693C0006D4951 /* AuthProPlusTests.xctest */,
+				2BDFA3852F3693C0006D4951 /* AuthProPlusUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2BDFA5A72F36978A006D4951 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2BDFA36D2F3693BE006D4951 /* AuthProPlus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BDFA38F2F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlus" */;
+			buildPhases = (
+				2BDFA36A2F3693BE006D4951 /* Sources */,
+				2BDFA36B2F3693BE006D4951 /* Frameworks */,
+				2BDFA36C2F3693BE006D4951 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2BDFA3702F3693BE006D4951 /* AuthProPlus */,
+			);
+			name = AuthProPlus;
+			packageProductDependencies = (
+				2BDFA5A82F36978A006D4951 /* FirebaseAuth */,
+				2BDFA5AA2F36978A006D4951 /* FirebaseCore */,
+				2BDFA5AE2F36978A006D4951 /* FirebaseStorage */,
+				2BDFA5B02F36979E006D4951 /* FirebaseFirestore */,
+				2BDFA5B22F36979E006D4951 /* GoogleSignIn */,
+				2BDFA5B42F36979E006D4951 /* GoogleSignInSwift */,
+				2BF524342F36D13700D2A034 /* Kingfisher */,
+			);
+			productName = AuthProPlus;
+			productReference = 2BDFA36E2F3693BE006D4951 /* AuthProPlus.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2BDFA37A2F3693C0006D4951 /* AuthProPlusTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BDFA3922F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlusTests" */;
+			buildPhases = (
+				2BDFA3772F3693C0006D4951 /* Sources */,
+				2BDFA3782F3693C0006D4951 /* Frameworks */,
+				2BDFA3792F3693C0006D4951 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BDFA37D2F3693C0006D4951 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2BDFA37E2F3693C0006D4951 /* AuthProPlusTests */,
+			);
+			name = AuthProPlusTests;
+			packageProductDependencies = (
+			);
+			productName = AuthProPlusTests;
+			productReference = 2BDFA37B2F3693C0006D4951 /* AuthProPlusTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2BDFA3842F3693C0006D4951 /* AuthProPlusUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BDFA3952F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlusUITests" */;
+			buildPhases = (
+				2BDFA3812F3693C0006D4951 /* Sources */,
+				2BDFA3822F3693C0006D4951 /* Frameworks */,
+				2BDFA3832F3693C0006D4951 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2BDFA3872F3693C0006D4951 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2BDFA3882F3693C0006D4951 /* AuthProPlusUITests */,
+			);
+			name = AuthProPlusUITests;
+			packageProductDependencies = (
+			);
+			productName = AuthProPlusUITests;
+			productReference = 2BDFA3852F3693C0006D4951 /* AuthProPlusUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2BDFA3662F3693BE006D4951 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					2BDFA36D2F3693BE006D4951 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					2BDFA37A2F3693C0006D4951 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 2BDFA36D2F3693BE006D4951;
+					};
+					2BDFA3842F3693C0006D4951 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 2BDFA36D2F3693BE006D4951;
+					};
+				};
+			};
+			buildConfigurationList = 2BDFA3692F3693BE006D4951 /* Build configuration list for PBXProject "AuthProPlus" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2BDFA3652F3693BE006D4951;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2BDFA5A62F36972C006D4951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				2BF524332F36D12700D2A034 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2BDFA36F2F3693BE006D4951 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2BDFA36D2F3693BE006D4951 /* AuthProPlus */,
+				2BDFA37A2F3693C0006D4951 /* AuthProPlusTests */,
+				2BDFA3842F3693C0006D4951 /* AuthProPlusUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2BDFA36C2F3693BE006D4951 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3792F3693C0006D4951 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3832F3693C0006D4951 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BDFA36A2F3693BE006D4951 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3772F3693C0006D4951 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BDFA3812F3693C0006D4951 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BDFA37D2F3693C0006D4951 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BDFA36D2F3693BE006D4951 /* AuthProPlus */;
+			targetProxy = 2BDFA37C2F3693C0006D4951 /* PBXContainerItemProxy */;
+		};
+		2BDFA3872F3693C0006D4951 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BDFA36D2F3693BE006D4951 /* AuthProPlus */;
+			targetProxy = 2BDFA3862F3693C0006D4951 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2BDFA38D2F3693C0006D4951 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2BDFA38E2F3693C0006D4951 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = LF78THV97C;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2BDFA3902F3693C0006D4951 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AuthProPlus/AuthProPlus.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AuthProPlus/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2BDFA3912F3693C0006D4951 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AuthProPlus/AuthProPlus.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AuthProPlus/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2BDFA3932F3693C0006D4951 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AuthProPlus.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AuthProPlus";
+			};
+			name = Debug;
+		};
+		2BDFA3942F3693C0006D4951 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlusTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AuthProPlus.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AuthProPlus";
+			};
+			name = Release;
+		};
+		2BDFA3962F3693C0006D4951 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlusUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AuthProPlus;
+			};
+			name = Debug;
+		};
+		2BDFA3972F3693C0006D4951 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LF78THV97C;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephandowless.AuthProPlusUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AuthProPlus;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2BDFA3692F3693BE006D4951 /* Build configuration list for PBXProject "AuthProPlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BDFA38D2F3693C0006D4951 /* Debug */,
+				2BDFA38E2F3693C0006D4951 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BDFA38F2F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BDFA3902F3693C0006D4951 /* Debug */,
+				2BDFA3912F3693C0006D4951 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BDFA3922F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlusTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BDFA3932F3693C0006D4951 /* Debug */,
+				2BDFA3942F3693C0006D4951 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2BDFA3952F3693C0006D4951 /* Build configuration list for PBXNativeTarget "AuthProPlusUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BDFA3962F3693C0006D4951 /* Debug */,
+				2BDFA3972F3693C0006D4951 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.9.0;
+			};
+		};
+		2BDFA5A62F36972C006D4951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+		2BF524332F36D12700D2A034 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.6.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2BDFA5A82F36978A006D4951 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		2BDFA5AA2F36978A006D4951 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		2BDFA5AE2F36978A006D4951 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		2BDFA5B02F36979E006D4951 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		2BDFA5B22F36979E006D4951 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA5A62F36972C006D4951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		2BDFA5B42F36979E006D4951 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BDFA5A62F36972C006D4951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		2BF524342F36D13700D2A034 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BF524332F36D12700D2A034 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 2BDFA3662F3693BE006D4951 /* Project object */;
+}
