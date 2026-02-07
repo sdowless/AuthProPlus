@@ -217,3 +217,80 @@ struct UserManagerTests {
         #expect(true)
     }
 }
+
+@MainActor
+struct RegistrationValidationTests {
+    private func makeManagerWithMock() -> RegistrationValidationManager {
+        RegistrationValidationManager(service: MockRegistrationValidationService())
+    }
+
+    private struct ThrowingValidationService: RegistrationValidationProtocol {
+        let emailError: RegistrationValidationError?
+        let usernameError: RegistrationValidationError?
+
+        func validateEmail(_ email: String) async throws -> InputValidationState {
+            if let emailError { throw emailError }
+            return .validated
+        }
+
+        func validateUsername(_ username: String) async throws -> InputValidationState {
+            if let usernameError { throw usernameError }
+            return .validated
+        }
+    }
+
+    @Test
+    func validateEmail_success_returnsValidated_andLeavesErrorNil() async throws {
+        let manager = makeManagerWithMock()
+        let result = await manager.validateEmail("valid@example.com")
+        #expect(result == .validated)
+        #expect(manager.validationError == nil)
+        // Manager sets state to `.validating` and returns the result; it doesn't overwrite the state.
+        #expect(manager.emailValidationState == .validating)
+    }
+
+    @Test
+    func validateEmail_invalidFormat_returnsInvalid_noError() async throws {
+        let manager = makeManagerWithMock()
+        let result = await manager.validateEmail("bad-email")
+        #expect(result == .invalid)
+        #expect(manager.validationError == nil)
+    }
+
+    @Test
+    func validateEmail_serviceThrows_setsValidationError_andReturnsInvalid() async throws {
+        let manager = RegistrationValidationManager(
+            service: ThrowingValidationService(emailError: .emailValidationFailed, usernameError: nil)
+        )
+        let result = await manager.validateEmail("valid@example.com")
+        #expect(result == .invalid)
+        #expect(manager.validationError == .emailValidationFailed)
+    }
+
+    @Test
+    func validateUsername_success_returnsValidated_andLeavesErrorNil() async throws {
+        let manager = makeManagerWithMock()
+        let result = await manager.validateUsername("good_username")
+        #expect(result == .validated)
+        #expect(manager.validationError == nil)
+        #expect(manager.usernameValidationState == .validating)
+    }
+
+    @Test
+    func validateUsername_invalidFormat_returnsInvalid_noError() async throws {
+        let manager = makeManagerWithMock()
+        let result = await manager.validateUsername("__bad__")
+        #expect(result == .invalid)
+        #expect(manager.validationError == nil)
+    }
+
+    @Test
+    func validateUsername_serviceThrows_setsValidationError_andReturnsInvalid() async throws {
+        let manager = RegistrationValidationManager(
+            service: ThrowingValidationService(emailError: nil, usernameError: .usernameValidationFailed)
+        )
+        let result = await manager.validateUsername("validusername")
+        #expect(result == .invalid)
+        #expect(manager.validationError == .usernameValidationFailed)
+    }
+}

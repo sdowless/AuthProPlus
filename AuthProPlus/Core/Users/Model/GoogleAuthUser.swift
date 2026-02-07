@@ -1,5 +1,5 @@
 //
-//  XGoogleAuthUser.swift
+//  GoogleAuthUser.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/6/26.

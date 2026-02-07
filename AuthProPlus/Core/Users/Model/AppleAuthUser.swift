@@ -1,5 +1,5 @@
 //
-//  XAppleAuthUser.swift
+//  AppleAuthUser.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/6/26.
