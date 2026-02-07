@@ -13,7 +13,6 @@ protocol UserServiceProtocol {
     func fetchUser(withUid uid: String) async throws -> AuthProPlusUser?
     func updateUsername(_ username: String) async throws
     func updateProfilePhoto(_ imageData: Data) async throws -> String
-    func updateProfileHeaderPhoto(_ imageData: Data) async throws -> String
     func saveUserDataAfterAuthentication(_ user: any BaseUser) async throws
 }
 
@@ -37,20 +36,20 @@ struct UserService: UserServiceProtocol {
     
     func updateUsername(_ username: String) async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        try await FirestoreConstants.UserCollection.document(uid).updateData(["username": username])
+        
+        try await FirestoreConstants
+            .UserCollection.document(uid)
+            .updateData(["username": username])
     }
     
     func updateProfilePhoto(_ imageData: Data) async throws -> String {
         guard let uid = Auth.auth().currentUser?.uid else { throw FirebaseAuthError.userNotFound }
-        let imageUrl = try await imageUploader.uploadImage(imageData: imageData, type: .profilePhoto)
-        try await FirestoreConstants.UserCollection.document(uid).updateData(["profileImageUrl": imageUrl])
-        return imageUrl
-    }
-    
-    func updateProfileHeaderPhoto(_ imageData: Data) async throws -> String {
-        guard let uid = Auth.auth().currentUser?.uid else { throw FirebaseAuthError.userNotFound }
-        let imageUrl = try await imageUploader.uploadImage(imageData: imageData, type: .profileHeaderPhoto)
-        try await FirestoreConstants.UserCollection.document(uid).updateData(["profileHeaderImageUrl": imageUrl])
+        let imageUrl = try await imageUploader.uploadImage(imageData: imageData)
+        
+        try await FirestoreConstants
+            .UserCollection.document(uid)
+            .updateData(["profileImageUrl": imageUrl])
+        
         return imageUrl
     }
     
