@@ -9,8 +9,8 @@
 import FirebaseStorage
 import Foundation
 
-@Observable
-class UserManager {
+@MainActor @Observable
+final class UserManager {
     var currentUser: AuthProPlusUser?
     var loadingState: ContentLoadingState = .loading
     

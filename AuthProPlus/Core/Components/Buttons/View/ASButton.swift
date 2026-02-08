@@ -68,7 +68,7 @@ struct ASButton: View {
             HStack(spacing: 6) {
                 Group {
                     if isLoading.wrappedValue {
-                        ASLoadingIndicator(color: .black)
+                        ASLoadingIndicator(color: .primaryTextInverse)
                     } else {
                         if let imageResource {
                             Image(imageResource)

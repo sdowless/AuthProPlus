@@ -68,7 +68,7 @@ struct ASAvatarView: View {
                 .resizable()
                 .frame(width: size.dimension, height: size.dimension)
                 .clipShape(Circle())
-                .foregroundStyle(Color(.systemGray5), .gray)
+                .foregroundStyle(Color(.systemGray6), .gray)
         }
     }
 }

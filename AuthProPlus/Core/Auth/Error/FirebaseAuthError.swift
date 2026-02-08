@@ -35,6 +35,8 @@ enum FirebaseAuthError: Error, LocalizedError {
     case invalidCredential
     /// Too many requests were made in a short period of time.
     case tooManyRequests
+    /// The operation requires recent authentication (e.g., deleting the account).
+    case requiresRecentLogin
 
     /// Initializes a `FirebaseAuthError` from an optional Firebase error code.
     ///
@@ -49,6 +51,7 @@ enum FirebaseAuthError: Error, LocalizedError {
         case 17009: self = .wrongPassword
         case 17010: self = .tooManyRequests
         case 17011: self = .userNotFound
+        case 17014: self = .requiresRecentLogin
         case 17020: self = .networkError
         case 17025: self = .credentialAlreadyInUse
         case 17026: self = .weakPassword
@@ -81,6 +84,9 @@ enum FirebaseAuthError: Error, LocalizedError {
             return "An unknown error occurred. Please try again."
         case .tooManyRequests:
             return "Access to this account has been temporarily disabled due to multiple failed login attempts. Please try again later."
+        case .requiresRecentLogin:
+            return "For your security, please sign in again before performing this action."
         }
     }
 }
+

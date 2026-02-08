@@ -75,9 +75,9 @@ private extension ASButtonStyle {
         
         switch rank {
         case .primary, .tertiary:
-                return .clear
+            return .clear
         case .secondary:
-                return .gray
+            return .gray
         }
     }
     

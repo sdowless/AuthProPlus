@@ -9,9 +9,22 @@ import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
 
+/// Handles Sign in with Apple authentication and maps results to app models.
+///
+/// This service exchanges an Apple identity token for Firebase credentials, signs in
+/// to Firebase, and constructs an `AppleAuthUser` used by the app. It also provides
+/// helpers for generating a cryptographically secure nonce and hashing it with SHA-256.
 struct AppleAuthService: AppleAuthServiceProtocol {
+    /// User service used to look up existing user records after Firebase sign-in.
     private let userService: UserServiceProtocol = UserService()
     
+    /// Exchanges Apple credentials for Firebase credentials and produces an `AppleAuthUser`.
+    ///
+    /// - Parameters:
+    ///   - appleIDCredential: The credential returned by `ASAuthorizationController`.
+    ///   - nonce: The original nonce used to create the Apple request (prevents replay attacks).
+    /// - Returns: An `AppleAuthUser` with the resolved identity.
+    /// - Throws: `AppleAuthError` if token parsing, nonce validation, authorization, or mapping fails.
     func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser {
         guard let appleIDToken = appleIDCredential.identityToken else {
             throw AppleAuthError.invalidIdentityToken
@@ -55,6 +68,10 @@ struct AppleAuthService: AppleAuthServiceProtocol {
         )
     }
     
+    /// Generates a cryptographically secure random string (nonce).
+    ///
+    /// - Parameter length: Number of characters to generate. Must be greater than 0.
+    /// - Returns: A random string consisting of URL-safe characters.
     func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)
@@ -74,6 +91,10 @@ struct AppleAuthService: AppleAuthServiceProtocol {
         return String(nonce)
     }
     
+    /// Computes a SHA-256 hash of the input string.
+    ///
+    /// - Parameter input: The string to hash.
+    /// - Returns: A lowercase hex representation of the SHA-256 hash.
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)

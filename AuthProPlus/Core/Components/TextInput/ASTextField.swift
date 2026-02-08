@@ -47,56 +47,52 @@ struct ASTextField: View {
     }
     
     var body: some View {
-        ZStack(alignment: .trailing) {
-            VStack(alignment: .leading) {
-                Text(title)
-                    .foregroundStyle(.primary.opacity(0.87))
-                    .font(.footnote)
-                
-                HStack {
-                    Group {
-                        if isSecureField {
-                            SecureField(titleKey, text: $text)
-                                .font(.subheadline)
-                                .padding(12)
-                                .background(Color(.systemGray6))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .frame(width: 360)
-                        } else {
-                            TextField(titleKey, text: $text)
-                                .font(.subheadline)
-                                .padding(12)
-                                .background(Color(.systemGray6))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                                .frame(width: 360)
-                                
+        VStack(alignment: .leading) {
+            Text(title)
+                .foregroundStyle(.primary.opacity(0.87))
+                .font(.footnote)
+            
+            Group {
+                if isSecureField {
+                    SecureField(titleKey, text: $text)
+                        .font(.subheadline)
+                        .padding(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                } else {
+                    TextField(titleKey, text: $text)
+                        .font(.subheadline)
+                        .padding(12)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+            }
+            .font(.subheadline)
+            .background(
+                Color(.systemGray6)
+                    .overlay(alignment: .trailing) {
+                        Group {
+                            switch validationState {
+                            case .idle:
+                                EmptyView()
+                            case .validating:
+                                ProgressView()
+                            case .invalid:
+                                Image(systemName: "exclamationmark.circle.fill")
+                                    .foregroundStyle(.red)
+                            case .validated:
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(.green)
+                            }
                         }
+                        .padding(.trailing, 12)
                     }
-                    .font(.subheadline)
-
-                    Spacer()
-                    
-                    switch validationState {
-                    case .idle:
-                        EmptyView()
-                    case .validating:
-                        ProgressView()
-                    case .invalid:
-                        Image(systemName: "exclamationmark.circle.fill")
-                            .imageScale(.large)
-                            .foregroundStyle(.red)
-                    case .validated:
-                        Image(systemName: "checkmark.circle.fill")
-                            .imageScale(.large)
-                            .foregroundStyle(.green)
-                    }
-                }
-                                
-                if validationState == .invalid, let errorMessage {
-                    Text(errorMessage)
-                        .font(.footnote)
-                        .foregroundStyle(.red)
-                }
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .frame(width: 360)
+            
+            if validationState == .invalid, let errorMessage {
+                Text(errorMessage)
+                    .font(.footnote)
+                    .foregroundStyle(.red)
             }
         }
     }

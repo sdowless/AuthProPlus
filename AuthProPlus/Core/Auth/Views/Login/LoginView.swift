@@ -10,10 +10,10 @@ import SwiftUI
 struct LoginView: View {
     @Environment(\.authDataStore) private var store
     @Environment(\.authRouter) private var router
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     
     @State private var isAuthenticating = false
-    
+        
     var body: some View {
         @Bindable var store = store
         
@@ -69,6 +69,11 @@ struct LoginView: View {
             }
         }
         .padding()
+        .alert("Sign In Error", isPresented: isShowingError) {
+            Button("OK") { authManager.error = nil }
+        } message: {
+            Text(authManager.error?.localizedDescription ?? "An unknown error occurred.")
+        }
     }
 }
 
@@ -83,6 +88,15 @@ private extension LoginView {
     
     var formIsValid: Bool {
         return store.email.isValidEmail() && store.password.isValidPassword()
+    }
+    
+    var isShowingError: Binding<Bool> {
+        Binding<Bool>(
+            get: { authManager.error != nil },
+            set: { newValue in
+                if newValue == false { authManager.error = nil }
+            }
+        )
     }
 }
 
