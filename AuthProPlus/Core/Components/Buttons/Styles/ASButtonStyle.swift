@@ -59,16 +59,12 @@ private extension ASButtonStyle {
     /// The background color resolved from the current variant and rank.
     var backgroundColor: Color {
         switch variant {
-        case .primary:
-                .primaryBlue
+        case .primary: .primaryText
         case .system:
             switch rank {
-            case .primary:
-                .white
-            case .secondary:
-                Color(.systemBackground)
-            case .tertiary:
-                .clear
+            case .primary: .primaryText
+            case .secondary: Color(.systemBackground)
+            case .tertiary: .clear
             }
         }
     }
@@ -78,12 +74,10 @@ private extension ASButtonStyle {
         guard variant == .system else { return .clear }
         
         switch rank {
-        case .primary:
-            return colorScheme == .dark ? .clear : .gray
+        case .primary, .tertiary:
+                return .clear
         case .secondary:
-            return .gray
-        case .tertiary:
-            return .clear
+                return .gray
         }
     }
     
@@ -91,11 +85,11 @@ private extension ASButtonStyle {
     var foregroundColor: Color {
         switch variant {
         case .primary:
-            return .white
+            return .primaryText
         case .system:
             switch rank {
             case .primary:
-                return .black
+                return .primaryTextInverse
             case .secondary, .tertiary:
                 return Color(.primaryText)
             }

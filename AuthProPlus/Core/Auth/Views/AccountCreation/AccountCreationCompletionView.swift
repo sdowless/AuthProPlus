@@ -15,16 +15,13 @@ struct AccountCreationCompletionView: View {
         VStack(spacing: 12) {
             Spacer()
             
-            XLogoImageView()
-                .padding()
-            
-            Text("Welcome to X, \(store.username)")
+            Text("Welcome to Auth Pro Plus, \(store.username)")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top)
                 .multilineTextAlignment(.center)
             
-            Text("Click below to complete registration and start using X")
+            Text("Click below to complete registration and start using Auth Pro Plus")
                 .font(.footnote)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)

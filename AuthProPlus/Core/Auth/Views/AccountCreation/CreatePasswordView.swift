@@ -29,8 +29,9 @@ struct CreatePasswordView: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 
-                ASFormInputField(
-                    "Password",
+                ASTextField(
+                    "Enter your password",
+                    title: "Password",
                     isSecureField: true,
                     text: $store.password
                 )

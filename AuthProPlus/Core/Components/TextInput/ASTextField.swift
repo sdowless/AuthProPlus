@@ -1,5 +1,5 @@
 //
-//  ASFormInputField.swift
+//  ASTextField.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/6/26.
@@ -12,28 +12,26 @@ import SwiftUI
 ///
 /// Supports secure text entry, a floating title label, and inline validation feedback
 /// via `InputValidationState` (progress, invalid, validated) and an optional error message.
-struct ASFormInputField: View {
-    /// The bound text value for the input.
+struct ASTextField: View {
     @Binding private var text: String
     
-    /// The placeholder and floating title text.
     private let titleKey: String
-    /// The current validation state used to drive inline indicators.
+    private let title: String
     private let validationState: InputValidationState
-    /// An optional error message shown when `validationState` is `.invalid`.
     private let errorMessage: String?
-    /// Whether the field should obscure input (e.g., for passwords).
     private let isSecureField: Bool
     
     /// Creates a form input field.
     /// - Parameters:
-    ///   - titleKey: The placeholder and floating title text.
+    ///   - titleKey: The placeholder for the text field
+    ///   - title: The floating title above the text field
     ///   - validationState: The validation state that controls inline indicators. Defaults to `.idle`.
     ///   - errorMessage: An optional error message displayed when the state is `.invalid`.
     ///   - isSecureField: Whether to obscure input (secure entry). Defaults to `false`.
     ///   - text: A binding to the text value.
     init(
         _ titleKey: String,
+        title: String,
         validationState: InputValidationState = .idle,
         errorMessage: String? = nil,
         isSecureField: Bool = false,
@@ -42,31 +40,39 @@ struct ASFormInputField: View {
         _text = text
         
         self.titleKey = titleKey
+        self.title = title
         self.validationState = validationState
         self.errorMessage = errorMessage
         self.isSecureField = isSecureField
     }
     
-    /// The field content, including floating label, input, divider, and optional validation UI.
     var body: some View {
         ZStack(alignment: .trailing) {
             VStack(alignment: .leading) {
-                if !text.isEmpty {
-                    Text(titleKey)
-                        .foregroundStyle(.primary.opacity(0.87))
-                        .font(.footnote)
-                }
+                Text(title)
+                    .foregroundStyle(.primary.opacity(0.87))
+                    .font(.footnote)
                 
                 HStack {
                     Group {
                         if isSecureField {
                             SecureField(titleKey, text: $text)
+                                .font(.subheadline)
+                                .padding(12)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .frame(width: 360)
                         } else {
                             TextField(titleKey, text: $text)
+                                .font(.subheadline)
+                                .padding(12)
+                                .background(Color(.systemGray6))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .frame(width: 360)
+                                
                         }
                     }
                     .font(.subheadline)
-                    .padding(.top, 4)
 
                     Spacer()
                     
@@ -85,9 +91,7 @@ struct ASFormInputField: View {
                             .foregroundStyle(.green)
                     }
                 }
-                
-                Divider()
-                
+                                
                 if validationState == .invalid, let errorMessage {
                     Text(errorMessage)
                         .font(.footnote)
@@ -100,13 +104,14 @@ struct ASFormInputField: View {
 
 #Preview {
     VStack(spacing: 20) {
-        ASFormInputField("Name", text: .constant(""))
-        ASFormInputField("Name", validationState: .validating, text: .constant(""))
-        ASFormInputField("Name", validationState: .invalid, text: .constant(""))
-        ASFormInputField("Name", validationState: .validated, text: .constant(""))
+        ASTextField("name@example.com", title: "Email", text: .constant(""))
+        ASTextField("name@example.com", title: "Email", validationState: .validating, text: .constant(""))
+        ASTextField("name@example.com", title: "Email", validationState: .invalid, text: .constant(""))
+        ASTextField("name@example.com", title: "Email", validationState: .validated, text: .constant(""))
         
-        ASFormInputField(
-            "Name",
+        ASTextField(
+            "name@example.com",
+            title: "Email",
             validationState: .invalid,
             errorMessage: "An error ocurred. Please try again.",
             text: .constant("")

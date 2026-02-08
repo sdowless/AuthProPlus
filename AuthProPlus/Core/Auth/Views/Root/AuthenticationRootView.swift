@@ -20,16 +20,26 @@ struct AuthenticationRootView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             VStack {
-                XLogoImageView()
+                Image(systemName: "square.on.square")
+                    .resizable()
+                    .frame(width: 112, height: 112)
                     .padding()
                 
                 Spacer()
                 
-                Text("See what's happening in the world right now.")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Secure authentication made simple.")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("Auth Pro Plus")
+                        .foregroundStyle(.secondary)
+                        .font(.headline)
+                }
+                .padding(.leading, 32)
+
                 
                 Spacer()
                 
@@ -61,9 +71,9 @@ struct AuthenticationRootView: View {
                     ASButton("Create Account") {
                         router.startAccountCreationFlow()
                     }
-                    .buttonStyle(.standard(rank: .secondary))
+                    .buttonStyle(.standard(rank: .primary))
 
-                    VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading, spacing: 16) {
                         Link(destination: URL(string: AppConstants.termsOfServiceURLString)!) {
                             HStack(spacing: 2) {
                                 Text("By signing up, you agree to our")
@@ -80,7 +90,8 @@ struct AuthenticationRootView: View {
                                 Text("Have an account already?")
                                     .foregroundStyle(.gray)
                                 
-                                Text("Log in")
+                                Text(" Log in")
+                                    .fontWeight(.semibold)
                                     .foregroundStyle(.primary)
                             }
                         }

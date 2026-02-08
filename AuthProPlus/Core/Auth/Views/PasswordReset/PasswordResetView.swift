@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PasswordResetView: View {
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     @Environment(\.authDataStore) private var store
     @Environment(\.dismiss) private var dismiss
 
@@ -21,8 +21,6 @@ struct PasswordResetView: View {
         @Bindable var store = store
 
         VStack {
-            XLogoImageView()
-
             VStack(alignment: .leading, spacing: 8) {
                 Text("Reset your password")
                     .font(.title)
@@ -33,10 +31,9 @@ struct PasswordResetView: View {
                     .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top)
 
             VStack(spacing: 20) {
-                ASFormInputField("Email", text: $store.email)
+                ASTextField("name@example.com", title: "Email", text: $store.email)
                     .textInputAutocapitalization(.never)
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
@@ -45,7 +42,7 @@ struct PasswordResetView: View {
 
             Spacer()
 
-            ASButton("Send reset link") {
+            ASButton("Send Reset Link") {
                 sendReset()
             }
             .buttonStyle(.standard, isLoading: $isSending)

@@ -17,16 +17,35 @@ struct LoginView: View {
     var body: some View {
         @Bindable var store = store
         
-        VStack {            
-            XLogoImageView()
+        VStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Welcome Back")
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                Text("Enter your login credentials to sign in.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 20) {
-                ASFormInputField("Email", text: $store.email)
-                    .textInputAutocapitalization(.never)
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
+                ASTextField(
+                    "name@example.com",
+                    title: "Email",
+                    text: $store.email
+                )
+                .textInputAutocapitalization(.never)
+                .textContentType(.emailAddress)
+                .keyboardType(.emailAddress)
                 
-                ASFormInputField("Password", isSecureField: true, text: $store.password)
+                ASTextField(
+                    "Enter your password",
+                    title: "Password",
+                    isSecureField: true,
+                    text: $store.password
+                )
+                .textContentType(.password)
             }
             .padding(.vertical, 24)
             

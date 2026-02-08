@@ -28,8 +28,9 @@ struct AddUsernameView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            ASFormInputField(
+            ASTextField(
                 "Enter username",
+                title: "Username",
                 validationState: usernameValidationState,
                 errorMessage: "This username is unavailable, please try again",
                 text: $username

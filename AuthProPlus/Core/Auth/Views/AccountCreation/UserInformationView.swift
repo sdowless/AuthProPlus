@@ -28,11 +28,12 @@ struct UserInformationView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 VStack(spacing: 20) {
-                    ASFormInputField("Name", text: $store.name)
+                    ASTextField("Enter your full name", title: "Name", text: $store.name)
                         .textContentType(.name)
                     
-                    ASFormInputField(
-                        "Email address",
+                    ASTextField(
+                        "name@example.com",
+                        title: "Email",
                         validationState: emailValidation,
                         errorMessage: "This email is not valid. Please try again.",
                         text: $store.email
@@ -41,8 +42,9 @@ struct UserInformationView: View {
                     .textContentType(.emailAddress)
                     .textInputAutocapitalization(.never)
                     
-                    ASFormInputField(
-                        "Username",
+                    ASTextField(
+                        "Enter your username",
+                        title: "Username",
                         validationState: usernameValidation,
                         errorMessage: "This username is not valid. Please try again.",
                         text: $store.username
@@ -59,7 +61,7 @@ struct UserInformationView: View {
             ASButton("Next") {
                 router.pushNextAccountCreationStep()
             }
-            .buttonStyle(.standard(size: .compact))
+            .buttonStyle(.standard(rank: .secondary, size: .compact))
             .disabled(!formIsValid)
             .opacity(formIsValid ? 1.0 : 0.5)
         }
