@@ -16,26 +16,35 @@ struct ContentView: View {
             switch authManager.authState {
             case .notDetermined, .authenticating:
                 ProgressView()
+                    .transition(.opacity)
             case .unauthenticated:
                 AuthenticationRootView()
+                    .transition(.move(edge: .leading))
             case .authenticated:
-                switch userManager.loadingState {
-                case .loading, .empty:
-                    ProgressView()
-                case .error(let error):
-                    Text(error.localizedDescription)
-                case .complete:
-                    VStack {
-                        Text("Your home screen goes here!")
-                        
-                        ASButton("Sign Out") {
-                            authManager.signOut()
+                Group {
+                    switch userManager.loadingState {
+                    case .loading, .empty:
+                        ProgressView()
+                            .transition(.opacity)
+                    case .error(let error):
+                        Text(error.localizedDescription)
+                            .transition(.opacity)
+                    case .complete:
+                        VStack {
+                            Text("Your home screen goes here!")
+                            
+                            ASButton("Sign Out") {
+                                authManager.signOut()
+                            }
+                            .buttonStyle(.standard)
                         }
-                        .buttonStyle(.standard)
+                        .transition(.move(edge: .trailing))
                     }
                 }
             }
         }
+        .animation(.easeInOut, value: authManager.authState)
+        .animation(.easeInOut, value: userManager.loadingState)
         .onAppear { authManager.configureAuthState() }
         .task(id: authManager.authState) {
             guard authManager.authState == .authenticated else { return }
