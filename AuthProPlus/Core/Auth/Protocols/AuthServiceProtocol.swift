@@ -12,6 +12,7 @@ import Foundation
 /// Concrete implementations (e.g., Firebase-backed services) provide user creation,
 /// login, password reset, and account management. The protocol is designed for use
 /// with async/await and to support dependency injection in the UI layer.
+/// - Note: Replace `AuthProPlusUser` with your app's own user model type as needed.
 protocol AuthServiceProtocol {
     /// Creates a new user account.
     /// - Parameters:
@@ -19,7 +20,8 @@ protocol AuthServiceProtocol {
     ///   - password: The user's password.
     ///   - username: The chosen username.
     ///   - fullname: The user's full name.
-    /// - Returns: The created `User` model.
+    /// - Returns: The created user model (e.g., `AuthProPlusUser`).
+    ///            Replace with your app's user type if different.
     /// - Throws: An error if user creation fails.
     func createUser(withEmail email: String, password: String, username: String, fullname: String) async throws -> AuthProPlusUser
     
@@ -48,3 +50,4 @@ protocol AuthServiceProtocol {
     /// Signs out the current user and clears any persisted session state.
     func signout()
 }
+

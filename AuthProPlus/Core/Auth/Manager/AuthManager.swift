@@ -155,10 +155,8 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                 let appleAuthUser = try await appleAuthService.signInWithApple(appleIDCredential, nonce: currentNonce)
                 
                 if appleAuthUser.requiresUsername {
-                    print("DEBUG: Is new user")
                     self.currentUser = appleAuthUser
                 } else {
-                    print("DEBUG: Is not new user. Proceed with sign in.")
                     updateAuthState(.authenticated)
                 }
             } catch {
