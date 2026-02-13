@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct AuthProPlusApp: App {
     @State private var authManager = AuthManager(
-        service: FirebaseAuthService(),
+        service: FirebaseAuthService(), // inject firebase or supabase auth service here
         googleAuthService: GoogleAuthService(),
         appleAuthService: AppleAuthService()
     )

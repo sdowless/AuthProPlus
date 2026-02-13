@@ -21,4 +21,11 @@ struct AppConstants {
     /// - Note: Replace with your app's actual TOS URL. You can also surface this as a
     ///   runtime-configurable setting if different environments require different links.
     static let termsOfServiceURLString = "https://google.com"
+    
+    
+    /// Supabase project url
+    static let projectURLString = "https://xcdbfmblmuszqvtrxsra.supabase.co"
+    
+    /// Supabase project api key
+    static let projectAPIKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZGJmbWJsbXVzenF2dHJ4c3JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4NjY1MDgsImV4cCI6MjA3ODQ0MjUwOH0.qdsYN6F-8w1ntULa1iO7CQd-5ftEVn167jabRbGHw20"
 }

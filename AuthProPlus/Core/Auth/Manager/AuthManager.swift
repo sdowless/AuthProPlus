@@ -25,14 +25,10 @@ final class AuthManager: NSObject {
     /// A partially created or signed-in user model (may be used during onboarding).
     var currentUser: (any BaseUser)?
     
-    /// Service responsible for core auth actions (email/password, session state, etc.).
     private let service: AuthServiceProtocol
-    /// Service wrapper for Google Sign-In.
     private let googleAuthService: GoogleAuthServiceProtocol
-    /// Service wrapper for Sign in with Apple.
     private let appleAuthService: AppleAuthServiceProtocol
     
-    /// Nonce used for Apple Sign In to prevent replay attacks.
     private var currentNonce: String?
     
     /// Creates an `AuthManager` with the required service dependencies.
@@ -47,15 +43,19 @@ final class AuthManager: NSObject {
     }
     
     /// Reads the persisted authentication state from the underlying service.
-    func configureAuthState() {
-        self.authState = service.getAuthState()
+    func configureAuthState() async {
+        do {
+            self.authState = try await service.getAuthState()
+        } catch {
+            self.error = .general(.userNotFound)
+        }
     }
     
     /// Deletes the current user's account and signs out on success.
     func deleteAccount() async {
         do {
             try await service.deleteAccount()
-            signOut()
+            await signOut()
         } catch {
             self.error = .general(.requiresRecentLogin)
             print("DEBUG: Failed to delete account with error: \(error)")
@@ -110,9 +110,13 @@ final class AuthManager: NSObject {
     }
     
     /// Signs out the current user and sets the state to unauthenticated.
-    func signOut() {
-        service.signout()
-        authState = .unauthenticated
+    func signOut() async {
+        do {
+            try await service.signout()
+            authState = .unauthenticated
+        } catch {
+            self.error = .general(.unknown)
+        }
     }
     
     /// Manually updates the authentication state.

@@ -34,7 +34,7 @@ struct ContentView: View {
                             Text("Your home screen goes here!")
                             
                             ASButton("Sign Out") {
-                                authManager.signOut()
+                                Task { await authManager.signOut() }
                             }
                             .buttonStyle(.standard)
                         }
@@ -45,7 +45,7 @@ struct ContentView: View {
         }
         .animation(.easeInOut, value: authManager.authState)
         .animation(.easeInOut, value: userManager.loadingState)
-        .onAppear { authManager.configureAuthState() }
+        .task { await authManager.configureAuthState() }
         .task(id: authManager.authState) {
             guard authManager.authState == .authenticated else { return }
             await userManager.fetchCurrentUser()
