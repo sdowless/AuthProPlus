@@ -10,8 +10,8 @@ import SwiftUI
 struct UserInformationView: View {
     @Environment(\.authRouter) private var router
     @Environment(\.authDataStore) private var store
-    
-    @State private var validationManager = RegistrationValidationManager(service: RegistrationValidationService())
+    @Environment(\.registrationValidationManager) private var validationManager
+
     @State private var emailValidation: InputValidationState = .idle
     @State private var usernameValidation: InputValidationState = .idle
     @State private var emailValidationTask: Task<Void, Never>?
@@ -35,7 +35,7 @@ struct UserInformationView: View {
                         "name@example.com",
                         title: "Email",
                         validationState: emailValidation,
-                        errorMessage: "This email is not valid. Please try again.",
+                        errorMessage: "The email is already in use. Please log in or try again.",
                         text: $store.email
                     )
                     .keyboardType(.emailAddress)
@@ -46,7 +46,7 @@ struct UserInformationView: View {
                         "Enter your username",
                         title: "Username",
                         validationState: usernameValidation,
-                        errorMessage: "This username is not valid. Please try again.",
+                        errorMessage: "This username is already in use. Please try again.",
                         text: $store.username
                     )
                     .textInputAutocapitalization(.never)

@@ -29,6 +29,6 @@ struct AppleAuthUser: BaseUser {
     
     /// A username value for your app. Defaults to an empty string; populate during onboarding
     /// or derive it from other profile information as needed.
-    var username: String = ""
+    var username: String?
 }
 

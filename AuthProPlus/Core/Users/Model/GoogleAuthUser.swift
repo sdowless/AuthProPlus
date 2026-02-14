@@ -25,7 +25,7 @@ struct GoogleAuthUser: BaseUser {
 
     /// A username value for your app. Defaults to an empty string; populate this later
     /// during onboarding or by deriving it from Google profile data if appropriate.
-    var username: String { "" }
+    var username: String?
 
     /// The email address from the Google profile, if available.
     var email: String? { userProfileData.email }

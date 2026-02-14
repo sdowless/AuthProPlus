@@ -11,6 +11,8 @@ struct ContentView: View {
     @Environment(\.authManager.self) private var authManager
     @Environment(\.userManager.self) private var userManager
 
+    @State private var isSigningOut = false
+    
     var body: some View {
         Group {
             switch authManager.authState {
@@ -34,9 +36,9 @@ struct ContentView: View {
                             Text("Your home screen goes here!")
                             
                             ASButton("Sign Out") {
-                                Task { await authManager.signOut() }
+                                signOut()
                             }
-                            .buttonStyle(.standard)
+                            .buttonStyle(.standard, isLoading: $isSigningOut)
                         }
                         .transition(.move(edge: .trailing))
                     }
@@ -49,6 +51,16 @@ struct ContentView: View {
         .task(id: authManager.authState) {
             guard authManager.authState == .authenticated else { return }
             await userManager.fetchCurrentUser()
+        }
+    }
+}
+
+private extension ContentView {
+    func signOut() {
+        Task {
+            isSigningOut = true
+            await authManager.signOut()
+            isSigningOut = false
         }
     }
 }

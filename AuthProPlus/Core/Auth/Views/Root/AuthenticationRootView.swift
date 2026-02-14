@@ -18,6 +18,8 @@ struct AuthenticationRootView: View {
     @State private var dataStore = AuthDataStore()
     
     var body: some View {
+        @Bindable var authManager = authManager
+        
         NavigationStack(path: $router.path) {
             VStack {
                 Image(systemName: "square.on.square")
@@ -53,7 +55,10 @@ struct AuthenticationRootView: View {
                     ASButton("Continue with Apple", systemImage: "apple.logo") {
                         signInwithApple()
                     }
-                    .buttonStyle(.standard(rank: .secondary))
+                    .buttonStyle(
+                        .standard(rank: .secondary),
+                        isLoading: $authManager.appleAuthInProgress
+                    )
                     
                     HStack {
                         Rectangle()
@@ -103,11 +108,7 @@ struct AuthenticationRootView: View {
             }
             .onChange(of: authManager.currentUser?.id) { oldValue, newValue in
                 guard let user = authManager.currentUser else { return }
-                saveUserDataAndShowContinueOnboarding(user)
-            }
-            .task(id: authManager.currentUser != nil) {
-                print("DEBUG: Task fired..")
-
+                saveUserDataAndContinueOnboarding(user)
             }
             .navigationDestination(for: AuthenticationRoutes.self) { route in
                 Group {
@@ -120,13 +121,13 @@ struct AuthenticationRootView: View {
                         oAuthRoute.destination
                     }
                 }
-                .environment(\.authRouter, router)
-                .environment(\.authDataStore, dataStore)
             }
         }
-        .onChange(of: router.path) { oldValue, newValue in
-            print("DEBUG: Path is \(newValue)")
-        }
+        .alert("Authentication Error", isPresented: .constant(authManager.error != nil), actions: {
+            Button("OK", role: .cancel) { authManager.error = nil }
+        }, message: {
+            Text(authManager.error?.localizedDescription ?? "An unknown error ocurred. Please try again.")
+        })
     }
 }
 
@@ -139,7 +140,7 @@ private extension AuthenticationRootView {
         authManager.requestAppleAuthorization()
     }
     
-    func saveUserDataAndShowContinueOnboarding(_ user: any BaseUser) {
+    func saveUserDataAndContinueOnboarding(_ user: any BaseUser) {
         Task {
             await userManager.saveUserDataAfterAuthentication(user)
             

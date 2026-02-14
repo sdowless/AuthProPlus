@@ -35,7 +35,6 @@ struct FirebaseAuthService: AuthServiceProtocol {
                 username: username,
                 fullname: fullname,
                 email: email,
-                isPrivate: false,
                 createdAt: Date()
             )
         } catch {

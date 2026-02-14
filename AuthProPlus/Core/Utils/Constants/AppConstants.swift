@@ -22,10 +22,12 @@ struct AppConstants {
     ///   runtime-configurable setting if different environments require different links.
     static let termsOfServiceURLString = "https://google.com"
     
-    
     /// Supabase project url
-    static let projectURLString = "https://xcdbfmblmuszqvtrxsra.supabase.co"
+    static let projectURLString = "https://nreamagdccsmmiyvtgfh.supabase.co"
     
     /// Supabase project api key
-    static let projectAPIKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZGJmbWJsbXVzenF2dHJ4c3JhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI4NjY1MDgsImV4cCI6MjA3ODQ0MjUwOH0.qdsYN6F-8w1ntULa1iO7CQd-5ftEVn167jabRbGHw20"
+    static let projectAPIKey = "sb_publishable_cpS7PJdot71WHzET9tkKAw_K8_5PatU"
+    
+    // Supabase google client id
+    static let googleClientID = "<your-google-signin-client-id>"
 }
