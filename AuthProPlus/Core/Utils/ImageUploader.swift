@@ -5,9 +5,8 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-import Firebase
-import FirebaseStorage
 import UIKit
+import Supabase
 
 /// Errors that can occur during image uploads.
 ///
@@ -24,20 +23,33 @@ enum ImageUploadError: Error {
     case compressionFailed
 }
 
-/// Responsible for uploading binary image data to Firebase Storage and returning a download URL.
+/// Responsible for uploading binary image data to Supabase Storage and returning a public URL.
 struct ImageUploader {
+    /// Supabase client used to perform storage operations.
+    private let client: SupabaseClient
+    /// The storage bucket name to upload into (e.g., "profile-photos").
+    private let bucketName: String
 
-    /// Uploads image data to Firebase Storage with optional compression, size checks, and metadata.
+    /// Creates an uploader that targets a specific Supabase storage bucket.
+    /// - Parameters:
+    ///   - client: A configured `SupabaseClient`.
+    ///   - bucketName: The bucket to upload images into. Defaults to `"profile-photos"`.
+    init(client: SupabaseClient, bucketName: String = "profile-photos") {
+        self.client = client
+        self.bucketName = bucketName
+    }
+
+    /// Uploads image data to Supabase Storage with optional compression, size checks, and metadata.
     ///
     /// - Parameters:
     ///   - imageData: Raw image bytes to upload (e.g., PNG/JPEG). If compression is applied, the data will be converted to JPEG.
-    ///   - folder: Storage folder (no leading slash). Defaults to `"profile_images"`.
+    ///   - folder: Storage folder (no leading slash) inside the bucket. Defaults to `"profile_images"`.
     ///   - filename: Optional file name (without extension). If `nil`, a UUID is used.
     ///   - maxBytes: Target maximum size in bytes for the uploaded data. Defaults to ~2 MB.
     ///   - compressIfNeeded: Whether to attempt JPEG compression if `imageData` exceeds `maxBytes`.
     ///   - jpegQualitySequence: Qualities to try (highest to lowest) when compressing to meet `maxBytes`.
-    /// - Returns: The public download URL string for the uploaded image.
-    /// - Throws: `ImageUploadError` or Firebase errors if upload/URL retrieval fails.
+    /// - Returns: The public URL string for the uploaded image.
+    /// - Throws: `ImageUploadError` or Supabase errors if upload/URL retrieval fails.
     func uploadImage(
         imageData: Data,
         folder: String = "profile_images",
@@ -68,17 +80,21 @@ struct ImageUploader {
         let fileExtension = preferredFileExtension(forContentType: contentType)
         let finalFileName = fileExtension.isEmpty ? baseName : "\(baseName).\(fileExtension)"
         let sanitizedFolder = folder.trimmingCharacters(in: CharacterSet(charactersIn: "/ "))
-        let path = "\(sanitizedFolder)/\(finalFileName)"
+        let path = sanitizedFolder.isEmpty ? finalFileName : "\(sanitizedFolder)/\(finalFileName)"
 
-        let ref = Storage.storage().reference(withPath: path)
+        // Upload to Supabase storage
+        let bucket = client.storage.from(bucketName)
+        _ = try await bucket.upload(
+            path,
+            data: dataToUpload,
+            options: .init(
+                contentType: contentType ?? "application/octet-stream",
+                upsert: true
+            )
+        )
 
-        let metadata = StorageMetadata()
-        if let contentType { metadata.contentType = contentType }
-
-        // Upload with metadata
-        _ = try await ref.putDataAsync(dataToUpload, metadata: metadata)
-        let url = try await ref.downloadURL()
-        return url.absoluteString
+        // Retrieve a public URL (ensure your bucket policy allows public access or use signed URLs)
+        return try bucket.getPublicURL(path: path).absoluteString
     }
 
     // MARK: - Compression Helpers

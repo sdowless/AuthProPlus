@@ -13,14 +13,12 @@ import Supabase
 ///   matching the app user id and columns that map to `AuthProPlusUser`.
 ///   Adjust table/column names to match your schema.
 struct SupabaseUserService: UserServiceProtocol {
-    /// The Supabase client used to perform database and auth operations.
     private let client: SupabaseClient
-
-    /// Helper responsible for uploading user images and returning a remote URL string.
-    private let imageUploader = ImageUploader()
+    private let imageUploader: ImageUploader
 
     init(client: SupabaseClient) {
         self.client = client
+        self.imageUploader = ImageUploader(client: client)
     }
 
     /// Fetches the current authenticated user from Supabase using the auth session.

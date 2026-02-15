@@ -12,34 +12,20 @@ private struct AuthDataStoreKey: EnvironmentKey {
 }
 
 private struct AuthManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-
     static var authService: AuthServiceProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseAuthService()
-        case .supabase:
-            SupabaseAuthService(client: AuthConfig.supabaseClient)
-        }
+        SupabaseAuthService(client: AuthConfig.supabaseClient)
     }
     
     static let defaultValue: AuthManager = AuthManager(
         service: authService,
-        googleAuthService: GoogleAuthService(provider: provider),
-        appleAuthService: AppleAuthService(provider: provider)
+        googleAuthService: GoogleAuthService(client: AuthConfig.supabaseClient),
+        appleAuthService: AppleAuthService(client: AuthConfig.supabaseClient)
     )
 }
 
 private struct RegistrationValidationManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-
     static var service: RegistrationValidationProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseRegistrationValidationService()
-        case .supabase(let client):
-            SupabaseRegistrationValidationService(client: client)
-        }
+        SupabaseRegistrationValidationService(client: AuthConfig.supabaseClient)
     }
     
     static let defaultValue: RegistrationValidationManager = RegistrationValidationManager(service: service)
@@ -53,16 +39,9 @@ private struct LoadingKey: EnvironmentKey {
     static let defaultValue: Binding<Bool> = .constant(false)
 }
 
-private struct UserManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-    
+private struct UserManagerKey: EnvironmentKey {    
     static var service: UserServiceProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseUserService()
-        case .supabase(client: let client):
-            SupabaseUserService(client: client)
-        }
+        SupabaseUserService(client: AuthConfig.supabaseClient)
     }
     
     static let defaultValue: UserManager = UserManager(service: service)

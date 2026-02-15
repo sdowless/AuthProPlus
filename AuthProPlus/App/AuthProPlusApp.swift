@@ -6,19 +6,10 @@
 //
 
 import Supabase
-import FirebaseCore
 import SwiftUI
 
 @main
 struct AuthProPlusApp: App {
-    init() {
-        let provider: AuthServiceProvider = AuthConfig.provider
-        
-        if case .firebase = provider {
-            FirebaseApp.configure()
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

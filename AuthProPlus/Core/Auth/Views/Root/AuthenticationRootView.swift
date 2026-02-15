@@ -159,7 +159,7 @@ private extension AuthenticationRootView {
             AuthManager(
                 service: MockAuthService(),
                 googleAuthService: MockGoogleAuthService(),
-                appleAuthService: AppleAuthService()
+                appleAuthService: MockAppleAuthService()
             )
         )
         .environment(UserManager(service: MockUserService()))

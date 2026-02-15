@@ -12,8 +12,6 @@ import Foundation
 /// Use this enum to surface a single error to the UI while preserving
 /// provider-level detail for diagnostics and recovery suggestions.
 enum AuthError: Error, LocalizedError {
-    /// Errors originating from Firebase email/password or general auth operations.
-    case firebase(FirebaseAuthError)
     /// Errors specific to Google Sign-In flows.
     case google(GoogleAuthError)
     /// Errors specific to Sign in with Apple flows.
@@ -28,8 +26,6 @@ enum AuthError: Error, LocalizedError {
     /// This delegates to the underlying provider error's `localizedDescription`.
     var errorDescription: String? {
         switch self {
-        case .firebase(let err):
-            return err.localizedDescription
         case .google(let err):
             return err.localizedDescription
         case .apple(let err):

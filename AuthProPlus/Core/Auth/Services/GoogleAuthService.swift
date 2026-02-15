@@ -5,111 +5,74 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-import Firebase
-import FirebaseAuth
 import Supabase
 import GoogleSignIn
 
-/// Default implementation of `GoogleAuthServiceProtocol` backed by Google Sign-In with pluggable backends.
+/// Supabase-backed implementation of `GoogleAuthServiceProtocol` using Google Sign-In.
 ///
 /// This service presents the Google Sign-In flow, retrieves the Google ID/access tokens, and then
-/// authenticates with the selected backend (Firebase or Supabase). On success, it returns a
-/// `GoogleAuthUser` model that you can persist or merge with your app's user record.
+/// signs in to Supabase using the ID token flow (no secondary OAuth UI). On success, it returns a
+/// `GoogleAuthUser` you can persist or merge with your app's user record.
 ///
 /// - Configuration:
-///   - Firebase: Ensure Firebase is configured and that your `GoogleService-Info.plist` contains
-///     a valid `CLIENT_ID` for Google Sign-In.
-///   - Supabase: Provide an initialized `SupabaseClient` via `.supabase(client:)` and a Google
-///     Sign-In client ID via your config (e.g., `AppConstants.googleClientID`). No Firebase files are required.
+///   - Provide a `SupabaseClient` configured for your environment.
+///   - Set `AppConstants.googleClientID` to your Google Sign-In client ID.
+///   - Ensure your app Info includes the reversed client ID URL scheme for Google redirect.
+///   - Enable Google provider in your Supabase project settings.
 ///
 /// - Usage:
 /// ```swift
-/// // Firebase backend
-/// let firebaseService = GoogleAuthService(provider: .firebase)
-///
-/// // Supabase backend
-/// let supabaseService = GoogleAuthService(provider: .supabase(client: supabaseClient))
+/// let service = GoogleAuthService(client: AppConfig.supabaseClient)
+/// let user = try await service.signIn()
 /// ```
-///
-/// - Notes:
-///   - When `provider` is `.firebase`, the service exchanges the Google tokens for a Firebase credential
-///     and signs in with Firebase Auth.
-///   - When `provider` is `.supabase`, the service signs in with Supabase using the Google tokens (no
-///     additional OAuth UI required).
 struct GoogleAuthService: GoogleAuthServiceProtocol {
-    private let provider: AuthServiceProvider
+    /// Supabase client used to perform the token exchange and create a session.
+    private let client: SupabaseClient
     
-    init(provider: AuthServiceProvider) {
-        self.provider = provider
+    /// Creates a Google auth service for Supabase.
+    /// - Parameter client: A configured `SupabaseClient` instance.
+    init(client: SupabaseClient) {
+        self.client = client
     }
     
-    /// Initiates Google Sign-In, authenticates with the selected backend, and returns a signed-in user model.
+    /// Presents Google Sign-In, exchanges tokens with Supabase, and returns a signed-in user.
     ///
-    /// The method resolves a Google client ID based on `provider`, presents the Google sign-in UI,
-    /// retrieves the ID token and access token, and then authenticates with the selected backend.
+    /// The method configures Google Sign-In with `AppConstants.googleClientID`, presents the sign-in UI,
+    /// retrieves the ID token and access token, and calls Supabase `signInWithIdToken` with provider `.google`.
     ///
-    /// - Returns: A `GoogleAuthUser` containing a backend-specific user identifier and Google profile data.
-    /// - Throws: `GoogleAuthError` for configuration or token issues, or an error from the selected backend
-    ///           if the credential sign-in fails.
-    /// - Important: Replace `GoogleAuthUser` with your app's user type if needed, or adapt the
-    ///              returned data to your domain model in a higher layer.
+    /// - Returns: A `GoogleAuthUser` containing the Supabase user ID and Google profile data.
+    /// - Throws: `GoogleAuthError.noRootViewController` if presentation fails, `GoogleAuthError.invalidToken`
+    ///           if the ID token is missing, or a Supabase auth error if the token exchange fails.
     func signIn() async throws -> GoogleAuthUser {
-        let clientID = try resolveClientId()
+        let clientID = AppConstants.googleClientID
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        
+
         let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        guard let rootViewController = scene?.windows.first?.rootViewController else {
+        guard let rootVC = scene?.windows.first?.rootViewController else {
             throw GoogleAuthError.noRootViewController
         }
-        
-        let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+
+        let result = try await GIDSignIn.sharedInstance.signIn(withPresenting: rootVC)
         let googleUser = result.user
-    
+
         guard let idToken = googleUser.idToken?.tokenString else {
             throw GoogleAuthError.invalidToken
         }
-        
-        let credential = GoogleAuthProvider.credential(
-            withIDToken: idToken,
-            accessToken: googleUser.accessToken.tokenString
+
+        // Sign in to Supabase using the Google tokens (no second OAuth flow)
+        let supabaseAuthResult = try await client.auth.signInWithIdToken(
+            credentials: .init(
+                provider: .google,
+                idToken: idToken,
+                accessToken: googleUser.accessToken.tokenString
+            )
         )
-        
-        switch provider {
-        case .firebase:
-            let firebaseAuthResult = try await Auth.auth().signIn(with: credential)
-            
-            return GoogleAuthUser(
-                id: firebaseAuthResult.user.uid,
-                userProfileData: googleUser.profile ?? GIDProfileData()
-            )
-        case .supabase(let client):
-            let supabaseAuthResult = try await client.auth.signInWithIdToken(
-                credentials: .init(
-                    provider: .google,
-                    idToken: idToken,
-                    accessToken: googleUser.accessToken.tokenString
-                )
-            )
-            
-            return GoogleAuthUser(
-                id: supabaseAuthResult.user.id.uuidString,
-                userProfileData: googleUser.profile ?? GIDProfileData()
-            )
-        }
-    }
-    
-    /// Resolves the Google Sign-In client ID based on the selected provider.
-    /// - Returns: The client ID string used to configure `GIDConfiguration`.
-    /// - Throws: `GoogleAuthError.invalidClientID` if no valid client ID can be resolved.
-    private func resolveClientId() throws -> String {
-        switch provider {
-        case .firebase:
-            guard let fid = FirebaseApp.app()?.options.clientID else { throw GoogleAuthError.invalidClientID }
-            return fid
-        case .supabase:
-            return AppConstants.googleClientID
-        }
+
+        return GoogleAuthUser(
+            id: supabaseAuthResult.user.id.uuidString,
+            userProfileData: googleUser.profile ?? GIDProfileData()
+        )
     }
 }
 

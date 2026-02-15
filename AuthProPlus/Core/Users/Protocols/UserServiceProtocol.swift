@@ -9,9 +9,8 @@ import Foundation
 
 /// Defines user-related data operations used by AuthProPlus.
 ///
-/// The default implementation (`UserService`) persists users to Firestore and relies on
-/// Firebase Auth for the current user's UID. If your app uses a different backend or
-/// user schema, provide your own type conforming to this protocol.
+/// Provide a concrete implementation for your backend (e.g., Supabase) that maps your app's
+/// user model to persistent storage and performs reads/updates as needed.
 protocol UserServiceProtocol {
     /// Fetches the current authenticated user from the database, if available.
     ///
@@ -19,10 +18,10 @@ protocol UserServiceProtocol {
     /// - Throws: An error if the fetch operation fails.
     func fetchCurrentUser() async throws -> AuthProPlusUser?
 
-    /// Fetches a user by Firebase Auth UID.
+    /// Fetches a user by backend user identifier.
     ///
-    /// - Parameter uid: The Firebase Auth UID for the user document.
-    /// - Returns: The fetched `AuthProPlusUser`, or `nil` if the document doesn't exist or decoding fails.
+    /// - Parameter uid: The backend user identifier.
+    /// - Returns: The fetched `AuthProPlusUser`, or `nil` if the record doesn't exist or decoding fails.
     /// - Throws: An error if the fetch operation fails.
     func fetchUser(withUid uid: String) async throws -> AuthProPlusUser?
 
@@ -36,7 +35,7 @@ protocol UserServiceProtocol {
     ///
     /// - Parameter imageData: Raw image data to upload.
     /// - Returns: The URL string of the uploaded image.
-    /// - Throws: An error if the user is not signed in, the upload fails, or Firestore update fails.
+    /// - Throws: An error if the user is not signed in, the upload fails, or the database update fails.
     func updateProfilePhoto(_ imageData: Data) async throws -> String
 
     /// Persists base user data after a successful authentication flow.
@@ -47,3 +46,4 @@ protocol UserServiceProtocol {
     /// - Throws: An error if encoding or persistence fails.
     func saveUserDataAfterAuthentication(_ user: any BaseUser) async throws
 }
+

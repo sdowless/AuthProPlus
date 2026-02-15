@@ -9,7 +9,7 @@ import Foundation
 
 /// Abstraction for authentication-related operations.
 ///
-/// Concrete implementations (e.g., Firebase-backed services) provide user creation,
+/// Concrete implementations (e.g., backend-specific services) provide user creation,
 /// login, password reset, and account management. The protocol is designed for use
 /// with async/await and to support dependency injection in the UI layer.
 /// - Note: Replace `AuthProPlusUser` with your app's own user model type as needed.

@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A lightweight user model produced from Sign in with Apple and Firebase authentication.
+/// A lightweight user model produced from Sign in with Apple and backend authentication.
 ///
 /// `AppleAuthUser` conforms to `BaseUser` and carries the identifiers and profile data available
 /// from Apple's sign-in flow. Use this model directly or map it to your app's canonical user type
@@ -18,7 +18,7 @@ import Foundation
 ///   provided on the very first authorization. Persist these values if you need them later.
 /// - SeeAlso: `ASAuthorizationAppleIDCredential` for details on the available fields.
 struct AppleAuthUser: BaseUser {
-    /// The stable identifier (e.g., Firebase UID or app-scoped Apple identifier) for the user.
+    /// The stable identifier (e.g., backend user ID or app-scoped Apple identifier) for the user.
     let id: String
     
     /// The email address provided by Sign in with Apple, if available.

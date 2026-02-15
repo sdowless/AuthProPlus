@@ -92,7 +92,7 @@ private extension LoginView {
             AuthManager(
                 service: MockAuthService(),
                 googleAuthService: MockGoogleAuthService(),
-                appleAuthService: AppleAuthService()
+                appleAuthService: MockAppleAuthService()
             )
         )
         .environment(AuthDataStore())
