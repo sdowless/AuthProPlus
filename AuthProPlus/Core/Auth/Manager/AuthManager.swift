@@ -26,6 +26,8 @@ final class AuthManager: NSObject {
     var currentUser: (any BaseUser)?
     /// Flag tthat tracks Apple authentication state
     var appleAuthInProgress = false
+    /// Flag tthat tracks Google authentication state
+    var googleAuthInProgress = false
     
     private let service: AuthServiceProtocol
     private let googleAuthService: GoogleAuthServiceProtocol
@@ -127,6 +129,9 @@ final class AuthManager: NSObject {
 extension AuthManager {
     /// Initiates Google Sign-In and updates state or stores a partial user if a username is required.
     func signInWithGoogle() async {
+        googleAuthInProgress = true
+        defer { googleAuthInProgress = false }
+        
         do {
             let user = try await googleAuthService.signIn()
             

@@ -16,6 +16,8 @@ import SwiftUI
 struct ASButton: View {
     /// Controls loading state; when true, the button shows a progress indicator.
     @Environment(\.isLoading) var isLoading
+    /// Controls enabled/disabled state. When disabled, button is not pressable
+    @Environment(\.isEnabled) var isEnabled
 
     /// The optional title text displayed next to the icon.
     private let title: String?
@@ -64,31 +66,25 @@ struct ASButton: View {
     
     /// The content and behavior of the button.
     var body: some View {
-        Button { action() } label: {
-            HStack(spacing: 6) {
-                Group {
-                    if isLoading.wrappedValue {
-                        ASLoadingIndicator(color: .primaryTextInverse)
-                    } else {
-                        if let imageResource {
-                            Image(imageResource)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 20, height: 20)
-                        } else if let systemImage {
-                            Image(systemName: systemImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 20, height: 20)
-                        }
-                        
-                        if let title {
-                            Text(title)
-                        }
-                    }
-                }
+        Label {
+            if let title {
+                Text(title)
+            }
+        } icon: {
+            if let imageResource {
+                Image(imageResource)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 20, height: 20)
+            } else if let systemImage {
+                Image(systemName: systemImage)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 20, height: 20)
             }
         }
+        .contentShape(Rectangle())
+        .buttonRepresentable(enabled: isEnabled, with: action)
     }
 }
 
