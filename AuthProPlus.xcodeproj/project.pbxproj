@@ -14,6 +14,7 @@
 		2BDFA5B32F36979E006D4951 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5B22F36979E006D4951 /* GoogleSignIn */; };
 		2BDFA5B52F36979E006D4951 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2BDFA5B42F36979E006D4951 /* GoogleSignInSwift */; };
 		2BF524352F36D13700D2A034 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2BF524342F36D13700D2A034 /* Kingfisher */; };
+		2BF526712F3A93F400D2A034 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2BF526702F3A93F400D2A034 /* Supabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 				2BDFA5B52F36979E006D4951 /* GoogleSignInSwift in Frameworks */,
 				2BF524352F36D13700D2A034 /* Kingfisher in Frameworks */,
 				2BDFA5AB2F36978A006D4951 /* FirebaseCore in Frameworks */,
+				2BF526712F3A93F400D2A034 /* Supabase in Frameworks */,
 				2BDFA5B12F36979E006D4951 /* FirebaseFirestore in Frameworks */,
 				2BDFA5A92F36978A006D4951 /* FirebaseAuth in Frameworks */,
 				2BDFA5B32F36979E006D4951 /* GoogleSignIn in Frameworks */,
@@ -157,6 +159,7 @@
 				2BDFA5B22F36979E006D4951 /* GoogleSignIn */,
 				2BDFA5B42F36979E006D4951 /* GoogleSignInSwift */,
 				2BF524342F36D13700D2A034 /* Kingfisher */,
+				2BF526702F3A93F400D2A034 /* Supabase */,
 			);
 			productName = AuthProPlus;
 			productReference = 2BDFA36E2F3693BE006D4951 /* AuthProPlus.app */;
@@ -244,6 +247,7 @@
 				2BDFA59D2F369584006D4951 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2BDFA5A62F36972C006D4951 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				2BF524332F36D12700D2A034 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				2BF525BD2F3A938E00D2A034 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2BDFA36F2F3693BE006D4951 /* Products */;
@@ -658,6 +662,14 @@
 				minimumVersion = 8.6.2;
 			};
 		};
+		2BF525BD2F3A938E00D2A034 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -695,6 +707,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2BF524332F36D12700D2A034 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		2BF526702F3A93F400D2A034 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2BF525BD2F3A938E00D2A034 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

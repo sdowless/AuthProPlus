@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AccountCreationCompletionView: View {
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     @Environment(\.authDataStore) private var store
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             Spacer()
             
             Text("Welcome to Auth Pro Plus, \(store.username)")

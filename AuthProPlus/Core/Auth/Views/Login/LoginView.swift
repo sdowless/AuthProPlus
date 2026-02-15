@@ -69,11 +69,6 @@ struct LoginView: View {
             }
         }
         .padding()
-        .alert("Sign In Error", isPresented: isShowingError) {
-            Button("OK") { authManager.error = nil }
-        } message: {
-            Text(authManager.error?.localizedDescription ?? "An unknown error occurred.")
-        }
     }
 }
 
@@ -88,15 +83,6 @@ private extension LoginView {
     
     var formIsValid: Bool {
         return store.email.isValidEmail() && store.password.isValidPassword()
-    }
-    
-    var isShowingError: Binding<Bool> {
-        Binding<Bool>(
-            get: { authManager.error != nil },
-            set: { newValue in
-                if newValue == false { authManager.error = nil }
-            }
-        )
     }
 }
 

@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.authManager.self) private var authManager
-    @Environment(\.userManager.self) private var userManager
-
+    @Environment(\.authManager) private var authManager
+    @Environment(\.userManager) private var userManager
+    @Environment(\.authRouter) private var router
+    
+    @State private var isSigningOut = false
+    
     var body: some View {
         Group {
             switch authManager.authState {
@@ -34,9 +37,9 @@ struct ContentView: View {
                             Text("Your home screen goes here!")
                             
                             ASButton("Sign Out") {
-                                authManager.signOut()
+                                signOut()
                             }
-                            .buttonStyle(.standard)
+                            .buttonStyle(.standard, isLoading: $isSigningOut)
                         }
                         .transition(.move(edge: .trailing))
                     }
@@ -45,10 +48,21 @@ struct ContentView: View {
         }
         .animation(.easeInOut, value: authManager.authState)
         .animation(.easeInOut, value: userManager.loadingState)
-        .onAppear { authManager.configureAuthState() }
+        .task { await authManager.configureAuthState() }
         .task(id: authManager.authState) {
             guard authManager.authState == .authenticated else { return }
             await userManager.fetchCurrentUser()
+        }
+    }
+}
+
+private extension ContentView {
+    func signOut() {
+        Task {
+            isSigningOut = true
+            router.path.removeAll()
+            await authManager.signOut()
+            isSigningOut = false
         }
     }
 }
@@ -59,7 +73,7 @@ struct ContentView: View {
             AuthManager(
                 service: MockAuthService(),
                 googleAuthService: MockGoogleAuthService(),
-                appleAuthService: AppleAuthService()
+                appleAuthService: MockAppleAuthService()
             )
         )
         .environment(UserManager(service: MockUserService()))

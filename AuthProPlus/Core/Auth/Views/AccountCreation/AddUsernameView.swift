@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AddUsernameView: View {
-    @Environment(\.authManager.self) private var authManager
-    @Environment(\.userManager.self) private var userManager
+    @Environment(\.authManager) private var authManager
+    @Environment(\.userManager) private var userManager
+    @Environment(\.registrationValidationManager) private var validationManager
     
     @State private var usernameValidationState: InputValidationState = .idle
-    @State private var validationManager = RegistrationValidationManager(service: RegistrationValidationService())
     @State private var username = ""
     
     var body: some View {
@@ -37,6 +37,13 @@ struct AddUsernameView: View {
             )
             .textInputAutocapitalization(.never)
             .autocorrectionDisabled()
+            .onChange(of: username) { oldValue, newValue in
+                if usernameValidationState == .invalid {
+                    if newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        usernameValidationState = .idle
+                    }
+                }
+            }
             
             Spacer()
             

@@ -12,11 +12,37 @@ private struct AuthDataStoreKey: EnvironmentKey {
 }
 
 private struct AuthManagerKey: EnvironmentKey {
+    static let provider = AuthConfig.provider
+
+    static var authService: AuthServiceProtocol {
+        switch provider {
+        case .firebase:
+            FirebaseAuthService()
+        case .supabase:
+            SupabaseAuthService(client: AuthConfig.supabaseClient)
+        }
+    }
+    
     static let defaultValue: AuthManager = AuthManager(
-        service: FirebaseAuthService(),
-        googleAuthService: GoogleAuthService(),
-        appleAuthService: AppleAuthService()
+        service: authService,
+        googleAuthService: GoogleAuthService(provider: provider),
+        appleAuthService: AppleAuthService(provider: provider)
     )
+}
+
+private struct RegistrationValidationManagerKey: EnvironmentKey {
+    static let provider = AuthConfig.provider
+
+    static var service: RegistrationValidationProtocol {
+        switch provider {
+        case .firebase:
+            FirebaseRegistrationValidationService()
+        case .supabase(let client):
+            SupabaseRegistrationValidationService(client: client)
+        }
+    }
+    
+    static let defaultValue: RegistrationValidationManager = RegistrationValidationManager(service: service)
 }
 
 private struct AuthRouterKey: EnvironmentKey {
@@ -28,7 +54,18 @@ private struct LoadingKey: EnvironmentKey {
 }
 
 private struct UserManagerKey: EnvironmentKey {
-    static let defaultValue: UserManager = UserManager(service: UserService())
+    static let provider = AuthConfig.provider
+    
+    static var service: UserServiceProtocol {
+        switch provider {
+        case .firebase:
+            FirebaseUserService()
+        case .supabase(client: let client):
+            SupabaseUserService(client: client)
+        }
+    }
+    
+    static let defaultValue: UserManager = UserManager(service: service)
 }
 
 /// Custom environment values used across the authentication flow.
@@ -72,5 +109,10 @@ extension EnvironmentValues {
     var authManager: AuthManager {
         get { self[AuthManagerKey.self] }
         set { self[AuthManagerKey.self] = newValue }
+    }
+    
+    var registrationValidationManager: RegistrationValidationManager {
+        get { self[RegistrationValidationManagerKey.self] }
+        set { self[RegistrationValidationManagerKey.self] = newValue }
     }
 }

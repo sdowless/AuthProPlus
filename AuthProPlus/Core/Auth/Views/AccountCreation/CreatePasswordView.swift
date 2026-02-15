@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreatePasswordView: View {
     @Environment(\.authDataStore) private var store
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     @Environment(\.authRouter) private var authRouter
 
     @State private var isLoading = false
@@ -54,7 +54,7 @@ struct CreatePasswordView: View {
             Spacer()
         }
         .padding()
-        .alert("Sign In Error", isPresented: isShowingError) {
+        .alert("Sign In Error", isPresented: .constant(authManager.error != nil)) {
             Button("OK") { authManager.error = nil }
         } message: {
             Text(authManager.error?.localizedDescription ?? "An unknown error occurred.")
@@ -79,15 +79,6 @@ private extension CreatePasswordView {
     
     var password: String {
         return store.password
-    }
-    
-    var isShowingError: Binding<Bool> {
-        Binding<Bool>(
-            get: { authManager.error != nil },
-            set: { newValue in
-                if newValue == false { authManager.error = nil }
-            }
-        )
     }
 }
 

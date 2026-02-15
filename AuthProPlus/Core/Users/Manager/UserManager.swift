@@ -24,7 +24,6 @@ final class UserManager {
     /// The loading state for fetching and preparing user content.
     var loadingState: ContentLoadingState = .loading
     
-    /// The backing service that performs network/database operations.
     private let service: UserServiceProtocol
     
     /// Creates a user manager with a given backing service.
@@ -83,7 +82,7 @@ final class UserManager {
         do {
             try await service.saveUserDataAfterAuthentication(user)
         } catch {
-            print("DEBUG: Failed to save user data to firestore with error: \(error)")
+            print("DEBUG: Failed to save user data with error: \(error)")
         }
     }
 }

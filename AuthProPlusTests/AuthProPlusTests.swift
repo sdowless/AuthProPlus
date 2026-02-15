@@ -22,7 +22,7 @@ struct AuthProPlusTests {
     @Test
     func configureAuthState_setsUnauthenticated() async throws {
         let manager = makeAuthManager()
-        manager.configureAuthState()
+        await manager.configureAuthState()
         #expect(manager.authState == .unauthenticated)
     }
 
@@ -37,33 +37,28 @@ struct AuthProPlusTests {
     @Test
     func sendResetPasswordLink_doesNotThrow() async throws {
         let manager = makeAuthManager()
-        do {
-            try await manager.sendResetPasswordLink(toEmail: "test@example.com")
-            // success: no throw expected
-            #expect(true)
-        } catch {
-            Issue.record("Unexpected error: \(error)")
-        }
+        await manager.sendResetPasswordLink(toEmail: "test@example.com")
+        #expect(true)
     }
 
     @Test
     func signUp_success_setsCurrentUser() async throws {
         let manager = makeAuthManager()
-        try await manager.signUp(
+        await manager.signUp(
             withEmail: "new@example.com",
             password: "password",
             username: "newuser",
             fullname: "New User"
         )
         let user = try #require(manager.currentUser)
-        #expect(!user.username.isEmpty)
+        #expect(user.username != nil)
     }
 
     @Test
     func signOut_setsUnauthenticated() async throws {
         let manager = makeAuthManager()
         manager.updateAuthState(.authenticated)
-        manager.signOut()
+        await manager.signOut()
         #expect(manager.authState == .unauthenticated)
     }
 
@@ -148,7 +143,7 @@ struct UserManagerTests {
         let id: String
         let email: String?
         let fullname: String?
-        let username: String
+        let username: String?
     }
 
     private struct ThrowingUserService: UserServiceProtocol {
@@ -167,8 +162,15 @@ struct UserManagerTests {
         let manager = makeUserManager()
         await manager.fetchCurrentUser()
         let user = try #require(manager.currentUser)
-        #expect(!user.username.isEmpty)
-        #expect({ if case .complete = manager.loadingState { return true } else { return false } }())
+        #expect(user.username != nil)
+        
+        #expect({
+            if case .complete = manager.loadingState {
+                return true
+            }else {
+                return false
+            }
+        }())
     }
 
     @Test

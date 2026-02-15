@@ -19,7 +19,7 @@ struct PasswordResetView: View {
 
     var body: some View {
         @Bindable var store = store
-
+        
         VStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Reset your password")
@@ -60,6 +60,11 @@ struct PasswordResetView: View {
         } message: {
             Text(alertMessage)
         }
+        alert("Error", isPresented: .constant(authManager.error != nil)) {
+            Button("OK", role: .cancel) { authManager.error = nil }
+        } message: {
+            Text(alertMessage)
+        }
     }
 }
 
@@ -72,18 +77,14 @@ private extension PasswordResetView {
         Task {
             isSending = true
             
-            do {
-                try await authManager.sendResetPasswordLink(toEmail: store.email)
-                alertTitle = "Email Sent"
-                alertMessage = "Check your email for a link to reset your password."
-                dismiss()
-            } catch {
-                alertTitle = "Error"
-                alertMessage = error.localizedDescription
-            }
+            await authManager.sendResetPasswordLink(toEmail: store.email)
+            alertTitle = "Email Sent"
+            alertMessage = "Check your email for a link to reset your password."
             
             isSending = false
             showingAlert = true
+            
+            dismiss()
         }
     }
 }

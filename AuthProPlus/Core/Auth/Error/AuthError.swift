@@ -13,22 +13,30 @@ import Foundation
 /// provider-level detail for diagnostics and recovery suggestions.
 enum AuthError: Error, LocalizedError {
     /// Errors originating from Firebase email/password or general auth operations.
-    case general(FirebaseAuthError)
+    case firebase(FirebaseAuthError)
     /// Errors specific to Google Sign-In flows.
     case google(GoogleAuthError)
     /// Errors specific to Sign in with Apple flows.
     case apple(AppleAuthError)
+    /// Errors specific to Sign in with Apple flows.
+    case supabase(SupabaseAuthError)
+    /// Unknow errors
+    case unknown(Error)
     
     /// A human-readable description suitable for presenting to end users.
     ///
     /// This delegates to the underlying provider error's `localizedDescription`.
     var errorDescription: String? {
         switch self {
-        case .general(let err):
+        case .firebase(let err):
             return err.localizedDescription
         case .google(let err):
             return err.localizedDescription
         case .apple(let err):
+            return err.localizedDescription
+        case .supabase(let err):
+            return err.localizedDescription
+        case .unknown(let err):
             return err.localizedDescription
         }
     }

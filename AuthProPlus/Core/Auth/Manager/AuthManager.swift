@@ -24,15 +24,13 @@ final class AuthManager: NSObject {
     var error: AuthError?
     /// A partially created or signed-in user model (may be used during onboarding).
     var currentUser: (any BaseUser)?
+    /// Flag tthat tracks Apple authentication state
+    var appleAuthInProgress = false
     
-    /// Service responsible for core auth actions (email/password, session state, etc.).
     private let service: AuthServiceProtocol
-    /// Service wrapper for Google Sign-In.
     private let googleAuthService: GoogleAuthServiceProtocol
-    /// Service wrapper for Sign in with Apple.
     private let appleAuthService: AppleAuthServiceProtocol
     
-    /// Nonce used for Apple Sign In to prevent replay attacks.
     private var currentNonce: String?
     
     /// Creates an `AuthManager` with the required service dependencies.
@@ -47,18 +45,29 @@ final class AuthManager: NSObject {
     }
     
     /// Reads the persisted authentication state from the underlying service.
-    func configureAuthState() {
-        self.authState = service.getAuthState()
+    func configureAuthState() async {
+        do {
+            self.authState = try await service.getAuthState()
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
+        } catch {
+            self.error = .unknown(error)
+        }
     }
     
     /// Deletes the current user's account and signs out on success.
     func deleteAccount() async {
         do {
             try await service.deleteAccount()
-            signOut()
+            await signOut()
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
         } catch {
-            self.error = .general(.requiresRecentLogin)
-            print("DEBUG: Failed to delete account with error: \(error)")
+            self.error = .unknown(error)
         }
     }
     
@@ -70,18 +79,32 @@ final class AuthManager: NSObject {
 
         do {
             self.authState = try await service.login(withEmail: email, password: password)
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
         } catch {
-            self.error = .general(error as? FirebaseAuthError ?? .unknown)
+            self.error = .unknown(error)
         }
     }
     
     /// Sends a password reset link to the provided email address.
-    func sendResetPasswordLink(toEmail email: String) async throws {
-        try await service.sendResetPasswordLink(toEmail: email)
+    func sendResetPasswordLink(toEmail email: String) async {
+        do {
+            try await service.sendResetPasswordLink(toEmail: email)
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
+        } catch {
+            self.error = .unknown(error)
+        }
     }
     
     /// Creates a new user with email/password and stores a temporary user for onboarding.
     func signUp(withEmail email: String, password: String, username: String, fullname: String) async {
+        clearError()
+        
         do {
             self.currentUser = try await service.createUser(
                 withEmail: email,
@@ -89,11 +112,43 @@ final class AuthManager: NSObject {
                 username: username,
                 fullname: fullname
             )
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
         } catch {
-            self.error = .general(error as? FirebaseAuthError ?? .unknown)
+            self.error = .unknown(error)
         }
     }
     
+    /// Signs out the current user and sets the state to unauthenticated.
+    func signOut() async {
+        clearError()
+        
+        do {
+            try await service.signout()
+            authState = .unauthenticated
+        } catch let error as FirebaseAuthError {
+            self.error = .firebase(error)
+        } catch let error as SupabaseAuthError {
+            self.error = .supabase(error)
+        } catch {
+            self.error = .unknown(error)
+        }
+    }
+    
+    /// Manually updates the authentication state.
+    func updateAuthState(_ state: AuthenticationState) {
+        self.authState = state
+    }
+    
+    private func clearError() {
+        error = nil
+    }
+}
+
+// MARK: - Sign in with Google
+extension AuthManager {
     /// Initiates Google Sign-In and updates state or stores a partial user if a username is required.
     func signInWithGoogle() async {
         do {
@@ -107,22 +162,6 @@ final class AuthManager: NSObject {
         } catch {
             self.error = .google(error as? GoogleAuthError ?? .unknown)
         }
-    }
-    
-    /// Signs out the current user and sets the state to unauthenticated.
-    func signOut() {
-        service.signout()
-        authState = .unauthenticated
-    }
-    
-    /// Manually updates the authentication state.
-    func updateAuthState(_ state: AuthenticationState) {
-        self.authState = state
-    }
-    
-    /// Clears the current error.
-    private func clearError() {
-        error = nil
     }
 }
 
@@ -146,12 +185,15 @@ extension AuthManager: ASAuthorizationControllerDelegate {
     /// Handles successful completion of the Apple authorization flow.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         Task {
+            appleAuthInProgress = true
+            defer { appleAuthInProgress = false }
+            
             do {
                 guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
                     self.error = .apple(.invalidIdentityToken)
                     return
                 }
-                
+                                
                 let appleAuthUser = try await appleAuthService.signInWithApple(appleIDCredential, nonce: currentNonce)
                 
                 if appleAuthUser.requiresUsername {
@@ -160,7 +202,7 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                     updateAuthState(.authenticated)
                 }
             } catch {
-                print("DEBUG: Error signing in with apple \(error.localizedDescription)")
+                print("DEBUG: Error \(error)")
                 self.error = .apple(error as? AppleAuthError ?? .unknown)
             }
         }
@@ -168,8 +210,8 @@ extension AuthManager: ASAuthorizationControllerDelegate {
     
     /// Handles errors during the Apple authorization flow.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("DEBUG: Error \(error)")
         self.error = .apple(.unknown)
-        print("DEBUG: Failed with error: \(error)")
     }
 }
 

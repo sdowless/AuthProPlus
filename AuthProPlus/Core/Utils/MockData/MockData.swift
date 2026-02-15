@@ -12,7 +12,6 @@ struct MockData {
         id: UUID().uuidString,
         username: "test_user",
         email: "test@gmail.com",
-        isPrivate: false,
         createdAt: Date()
     )
 }

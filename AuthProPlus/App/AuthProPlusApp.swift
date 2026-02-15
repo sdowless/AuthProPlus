@@ -5,27 +5,23 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
+import Supabase
 import FirebaseCore
 import SwiftUI
 
 @main
 struct AuthProPlusApp: App {
-    @State private var authManager = AuthManager(
-        service: FirebaseAuthService(),
-        googleAuthService: GoogleAuthService(),
-        appleAuthService: AppleAuthService()
-    )
-    @State private var userManager = UserManager(service: UserService())
-    
     init() {
-        FirebaseApp.configure()
+        let provider: AuthServiceProvider = AuthConfig.provider
+        
+        if case .firebase = provider {
+            FirebaseApp.configure()
+        }
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.authManager, authManager)
-                .environment(\.userManager, userManager)
         }
     }
 }

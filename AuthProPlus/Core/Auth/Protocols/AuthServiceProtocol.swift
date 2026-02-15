@@ -32,7 +32,7 @@ protocol AuthServiceProtocol {
     /// Returns the current authentication state.
     ///
     /// Implementations may consult cached credentials or underlying SDKs.
-    func getAuthState() -> AuthenticationState
+    func getAuthState() async throws -> AuthenticationState
     
     /// Signs in using an email and password.
     /// - Parameters:
@@ -48,6 +48,6 @@ protocol AuthServiceProtocol {
     func sendResetPasswordLink(toEmail email: String) async throws
     
     /// Signs out the current user and clears any persisted session state.
-    func signout()
+    func signout() async throws 
 }
 

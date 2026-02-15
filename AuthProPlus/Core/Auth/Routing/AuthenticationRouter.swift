@@ -47,6 +47,7 @@ class AuthenticationRouter {
             return
         }
 
+        print("DEBUG: Trying to push next step..")
         switch accountCreationRoutes {
         case .userInformationView:
             path.append(.accountCreation(.passwordView))
