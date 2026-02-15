@@ -12,7 +12,7 @@ import SwiftUI
 @main
 struct AuthProPlusApp: App {
     init() {
-        let provider: AuthServiceProvider = AppConfig.provider
+        let provider: AuthServiceProvider = AuthConfig.provider
         
         if case .firebase = provider {
             FirebaseApp.configure()

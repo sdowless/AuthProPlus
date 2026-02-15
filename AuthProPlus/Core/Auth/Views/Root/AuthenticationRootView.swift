@@ -11,14 +11,14 @@ import GoogleSignIn
 import SwiftUI
 
 struct AuthenticationRootView: View {
-    @Environment(\.authManager.self) private var authManager
-    @Environment(\.userManager.self) private var userManager
-
-    @State private var router = AuthenticationRouter()
-    @State private var dataStore = AuthDataStore()
+    @Environment(\.authManager) private var authManager
+    @Environment(\.userManager) private var userManager
+    @Environment(\.authRouter) private var router
+    @Environment(\.authDataStore) private var dataStore
     
     var body: some View {
         @Bindable var authManager = authManager
+        @Bindable var router = router
         
         NavigationStack(path: $router.path) {
             VStack {

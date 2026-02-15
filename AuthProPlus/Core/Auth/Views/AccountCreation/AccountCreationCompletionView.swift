@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AccountCreationCompletionView: View {
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     @Environment(\.authDataStore) private var store
     
     var body: some View {

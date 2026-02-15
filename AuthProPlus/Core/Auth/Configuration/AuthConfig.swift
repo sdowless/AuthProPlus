@@ -1,5 +1,5 @@
 //
-//  AppConfig.swift
+//  AuthConfig.swift
 //  AuthProPlus
 //
 //  Created by Stephan Dowless on 2/14/26.
@@ -16,12 +16,13 @@ import Foundation
 ///
 /// - Note: If you switch to Firebase, ensure `FirebaseApp.configure()` is called at app launch
 ///   (e.g., in `AuthProPlusApp.init()` when `provider == .firebase`).
-struct AppConfig {
+struct AuthConfig {
     /// A preconfigured `SupabaseClient` for the current environment.
     ///
     /// Uses values from `AppConstants`. Ensure `projectURLString` and `projectAPIKey` are set
     /// correctly for your environment. Do not embed a Supabase service key in client apps; use
     /// the public anon key here and keep admin/service keys on a trusted server.
+    /// 
     static var supabaseClient: SupabaseClient {
         return SupabaseClient(
             supabaseURL: URL(string: AppConstants.projectURLString)!,
@@ -45,7 +46,8 @@ struct AppConfig {
     /// (e.g., `AppConstants.googleClientID`) used by GoogleAuthService. For Firebase setups,
     /// ensure `GoogleService-Info.plist` and reversed URL scheme are present.
     static var provider: AuthServiceProvider {
-        return .supabase(client: supabaseClient)
+//        return .supabase(client: supabaseClient)
+        return .firebase
     }
 }
 

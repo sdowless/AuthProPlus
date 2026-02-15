@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreatePasswordView: View {
     @Environment(\.authDataStore) private var store
-    @Environment(\.authManager.self) private var authManager
+    @Environment(\.authManager) private var authManager
     @Environment(\.authRouter) private var authRouter
 
     @State private var isLoading = false

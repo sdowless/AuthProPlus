@@ -12,14 +12,14 @@ private struct AuthDataStoreKey: EnvironmentKey {
 }
 
 private struct AuthManagerKey: EnvironmentKey {
-    static let provider = AppConfig.provider
+    static let provider = AuthConfig.provider
 
     static var authService: AuthServiceProtocol {
         switch provider {
         case .firebase:
             FirebaseAuthService()
         case .supabase:
-            SupabaseAuthService(client: AppConfig.supabaseClient)
+            SupabaseAuthService(client: AuthConfig.supabaseClient)
         }
     }
     
@@ -31,7 +31,7 @@ private struct AuthManagerKey: EnvironmentKey {
 }
 
 private struct RegistrationValidationManagerKey: EnvironmentKey {
-    static let provider = AppConfig.provider
+    static let provider = AuthConfig.provider
 
     static var service: RegistrationValidationProtocol {
         switch provider {
@@ -54,7 +54,7 @@ private struct LoadingKey: EnvironmentKey {
 }
 
 private struct UserManagerKey: EnvironmentKey {
-    static let provider = AppConfig.provider
+    static let provider = AuthConfig.provider
     
     static var service: UserServiceProtocol {
         switch provider {

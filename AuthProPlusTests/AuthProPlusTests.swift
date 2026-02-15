@@ -38,7 +38,6 @@ struct AuthProPlusTests {
     func sendResetPasswordLink_doesNotThrow() async throws {
         let manager = makeAuthManager()
         await manager.sendResetPasswordLink(toEmail: "test@example.com")
-        // success: no throw expected
         #expect(true)
     }
 

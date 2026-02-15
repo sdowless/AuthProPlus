@@ -71,6 +71,7 @@ struct UserInformationView: View {
         .onChange(of: store.email) { _, newValue in
             validateEmail(newValue)
         }
+        .task { validateOnAppearIfNecessary() }
         .onDisappear {
             emailValidationTask?.cancel()
             usernameValidationTask?.cancel()
@@ -84,6 +85,16 @@ private extension UserInformationView {
         return store.name.isValidName() &&
         emailValidation == .validated &&
         usernameValidation == .validated
+    }
+    
+    func validateOnAppearIfNecessary() {
+        if store.email.isValidEmail(){
+            validateEmail(store.email)
+        }
+        
+        if store.username.isValidUsername(){
+            validateEmail(store.username)
+        }
     }
     
     func validateEmail(_ email: String) {

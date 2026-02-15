@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.authManager.self) private var authManager
-    @Environment(\.userManager.self) private var userManager
-
+    @Environment(\.authManager) private var authManager
+    @Environment(\.userManager) private var userManager
+    @Environment(\.authRouter) private var router
+    
     @State private var isSigningOut = false
     
     var body: some View {
@@ -59,6 +60,7 @@ private extension ContentView {
     func signOut() {
         Task {
             isSigningOut = true
+            router.path.removeAll()
             await authManager.signOut()
             isSigningOut = false
         }
@@ -71,7 +73,7 @@ private extension ContentView {
             AuthManager(
                 service: MockAuthService(),
                 googleAuthService: MockGoogleAuthService(),
-                appleAuthService: AppleAuthService()
+                appleAuthService: MockAppleAuthService()
             )
         )
         .environment(UserManager(service: MockUserService()))

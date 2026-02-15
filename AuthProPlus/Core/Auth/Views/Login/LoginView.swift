@@ -69,11 +69,6 @@ struct LoginView: View {
             }
         }
         .padding()
-        .alert("Sign In Error", isPresented: .constant(authManager.error != nil)) {
-            Button("OK") { authManager.error = nil }
-        } message: {
-            Text(authManager.error?.localizedDescription ?? "An unknown error occurred.")
-        }
     }
 }
 
