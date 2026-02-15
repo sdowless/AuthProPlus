@@ -8,36 +8,17 @@
 import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
-import Supabase
 
 /// Handles Sign in with Apple authentication and maps results to app models.
 ///
-/// This service exchanges an Apple identity token for Firebase or Supabase credentials, signs in
+/// This service exchanges an Apple identity token for Firebase credentials, signs in
 /// to the selected provider, and constructs an `AppleAuthUser` used by the app. It also provides
 /// helpers for generating a cryptographically secure nonce and hashing it with SHA-256.
 ///
-/// The authentication provider can be specified via the `AuthServiceProvider` enum. When `.firebase` is
-/// used, it signs into Firebase using the Apple token. When `.supabase(let client)` is used, it signs into
-/// Supabase using the Apple identity token without starting a second OAuth flow.
 struct AppleAuthService: AppleAuthServiceProtocol {
-    private let provider: AuthServiceProvider
-    private let userService: UserServiceProtocol
+    private let userService: UserServiceProtocol = FirebaseUserService()
     
-    /// Initializes the AppleAuthService with a specific authentication provider.
-    ///
-    /// - Parameter provider: The auth provider to use for sign-in. Defaults to `.firebase`.
-    init(provider: AuthServiceProvider = .firebase) {
-        self.provider = provider
-        
-        switch provider {
-        case .firebase:
-            self.userService = FirebaseUserService()
-        case .supabase(let client):
-            self.userService = SupabaseUserService(client: client)
-        }
-    }
-    
-    /// Exchanges Apple credentials for Firebase or Supabase credentials and produces an `AppleAuthUser`.
+    /// Exchanges Apple credentials for Firebase credentials and produces an `AppleAuthUser`.
     ///
     /// - Parameters:
     ///   - appleIDCredential: The credential returned by `ASAuthorizationController`.
@@ -45,8 +26,6 @@ struct AppleAuthService: AppleAuthServiceProtocol {
     /// - Returns: An `AppleAuthUser` with the resolved identity.
     /// - Throws: `AppleAuthError` if token parsing, nonce validation, authorization, or mapping fails.
     ///
-    /// When `.firebase` provider is selected, signs into Firebase using the Apple credential.
-    /// When `.supabase(let client)` provider is selected, signs into Supabase using the Apple identity token.
     func signInWithApple(_ appleIDCredential: ASAuthorizationAppleIDCredential, nonce: String?) async throws -> AppleAuthUser {
         guard let appleIDToken = appleIDCredential.identityToken else {
             throw AppleAuthError.invalidIdentityToken
@@ -61,7 +40,6 @@ struct AppleAuthService: AppleAuthServiceProtocol {
         }
         
         return try await signIn(
-            using: provider,
             appleIDCredential: appleIDCredential,
             idTokenString: idTokenString,
             nonce: nonce
@@ -76,74 +54,38 @@ struct AppleAuthService: AppleAuthServiceProtocol {
     ///   - nonce: The original nonce used in the Apple request.
     /// - Returns: An AppleAuthUser mapped from the provider's sign-in result.
     private func signIn(
-        using provider: AuthServiceProvider,
         appleIDCredential: ASAuthorizationAppleIDCredential,
         idTokenString: String,
         nonce: String
     ) async throws -> AppleAuthUser {
-        switch provider {
-        case .firebase:
-            let firebaseAuthResult: AuthDataResult
-            let credential = OAuthProvider.appleCredential(
-                withIDToken: idTokenString,
-                rawNonce: nonce,
-                fullName: appleIDCredential.fullName
-            )
-            
-            do {
-                firebaseAuthResult = try await Auth.auth().signIn(with: credential)
-            } catch {
-                throw AppleAuthError.authorizationFailed(underlying: error)
-            }
-            
-            let existingUser = try await userService.fetchUser(withUid: firebaseAuthResult.user.uid)
-            var name: String?
-            
-            if let nameComponents = appleIDCredential.fullName {
-                let formatter = PersonNameComponentsFormatter()
-                formatter.style = .medium
-                name = formatter.string(from: nameComponents)
-            }
-            
-            return AppleAuthUser(
-                id: firebaseAuthResult.user.uid,
-                email: appleIDCredential.email ?? firebaseAuthResult.user.email,
-                fullname: name,
-                username: existingUser?.username ?? ""
-            )
-        case .supabase(let client):
-            do {
-                let supabaseAuthResult = try await client.auth.signInWithIdToken(
-                    credentials: .init(
-                        provider: .apple,
-                        idToken: idTokenString,
-                        accessToken: nil,
-                        nonce: nonce
-                    )
-                )
-                
-                let existingUser = try await userService.fetchUser(withUid: supabaseAuthResult.user.id.uuidString)
-                var name: String?
-                
-                if let nameComponents = appleIDCredential.fullName {
-                    let formatter = PersonNameComponentsFormatter()
-                    formatter.style = .medium
-                    name = formatter.string(from: nameComponents)
-                } else {
-                    name = existingUser?.fullname
-                }
-                
-                return AppleAuthUser(
-                    id: supabaseAuthResult.user.id.uuidString,
-                    email: supabaseAuthResult.user.email,
-                    fullname: name,
-                    username: existingUser?.username
-                )
-            } catch {
-                throw AppleAuthError.authorizationFailed(underlying: error)
-            }
+        let firebaseAuthResult: AuthDataResult
+        let credential = OAuthProvider.appleCredential(
+            withIDToken: idTokenString,
+            rawNonce: nonce,
+            fullName: appleIDCredential.fullName
+        )
+        
+        do {
+            firebaseAuthResult = try await Auth.auth().signIn(with: credential)
+        } catch {
+            throw AppleAuthError.authorizationFailed(underlying: error)
         }
-    }
+        
+        let existingUser = try await userService.fetchUser(withUid: firebaseAuthResult.user.uid)
+        var name: String?
+        
+        if let nameComponents = appleIDCredential.fullName {
+            let formatter = PersonNameComponentsFormatter()
+            formatter.style = .medium
+            name = formatter.string(from: nameComponents)
+        }
+        
+        return AppleAuthUser(
+            id: firebaseAuthResult.user.uid,
+            email: appleIDCredential.email ?? firebaseAuthResult.user.email,
+            fullname: name,
+            username: existingUser?.username ?? ""
+        )    }
     
     /// Generates a cryptographically secure random string (nonce).
     ///

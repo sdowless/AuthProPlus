@@ -5,18 +5,13 @@
 //  Created by Stephan Dowless on 2/6/26.
 //
 
-import Supabase
 import FirebaseCore
 import SwiftUI
 
 @main
 struct AuthProPlusApp: App {
     init() {
-        let provider: AuthServiceProvider = AuthConfig.provider
-        
-        if case .firebase = provider {
-            FirebaseApp.configure()
-        }
+        FirebaseApp.configure()
     }
     
     var body: some Scene {

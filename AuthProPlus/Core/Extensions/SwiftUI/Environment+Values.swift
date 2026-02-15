@@ -12,37 +12,17 @@ private struct AuthDataStoreKey: EnvironmentKey {
 }
 
 private struct AuthManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-
-    static var authService: AuthServiceProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseAuthService()
-        case .supabase:
-            SupabaseAuthService(client: AuthConfig.supabaseClient)
-        }
-    }
-    
     static let defaultValue: AuthManager = AuthManager(
-        service: authService,
-        googleAuthService: GoogleAuthService(provider: provider),
-        appleAuthService: AppleAuthService(provider: provider)
+        service: FirebaseAuthService(),
+        googleAuthService: GoogleAuthService(),
+        appleAuthService: AppleAuthService()
     )
 }
 
 private struct RegistrationValidationManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-
-    static var service: RegistrationValidationProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseRegistrationValidationService()
-        case .supabase(let client):
-            SupabaseRegistrationValidationService(client: client)
-        }
-    }
-    
-    static let defaultValue: RegistrationValidationManager = RegistrationValidationManager(service: service)
+    static let defaultValue: RegistrationValidationManager = RegistrationValidationManager(
+        service: FirebaseRegistrationValidationService()
+    )
 }
 
 private struct AuthRouterKey: EnvironmentKey {
@@ -54,18 +34,7 @@ private struct LoadingKey: EnvironmentKey {
 }
 
 private struct UserManagerKey: EnvironmentKey {
-    static let provider = AuthConfig.provider
-    
-    static var service: UserServiceProtocol {
-        switch provider {
-        case .firebase:
-            FirebaseUserService()
-        case .supabase(client: let client):
-            SupabaseUserService(client: client)
-        }
-    }
-    
-    static let defaultValue: UserManager = UserManager(service: service)
+    static let defaultValue: UserManager = UserManager(service: FirebaseUserService())
 }
 
 /// Custom environment values used across the authentication flow.

@@ -48,12 +48,8 @@ final class AuthManager: NSObject {
     func configureAuthState() async {
         do {
             self.authState = try await service.getAuthState()
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -62,12 +58,8 @@ final class AuthManager: NSObject {
         do {
             try await service.deleteAccount()
             await signOut()
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -79,12 +71,8 @@ final class AuthManager: NSObject {
 
         do {
             self.authState = try await service.login(withEmail: email, password: password)
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -92,12 +80,8 @@ final class AuthManager: NSObject {
     func sendResetPasswordLink(toEmail email: String) async {
         do {
             try await service.sendResetPasswordLink(toEmail: email)
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -112,12 +96,8 @@ final class AuthManager: NSObject {
                 username: username,
                 fullname: fullname
             )
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -128,12 +108,8 @@ final class AuthManager: NSObject {
         do {
             try await service.signout()
             authState = .unauthenticated
-        } catch let error as FirebaseAuthError {
-            self.error = .firebase(error)
-        } catch let error as SupabaseAuthError {
-            self.error = .supabase(error)
         } catch {
-            self.error = .unknown(error)
+            self.error = .firebase(error as? FirebaseAuthError ?? .unknown)
         }
     }
     
@@ -202,7 +178,6 @@ extension AuthManager: ASAuthorizationControllerDelegate {
                     updateAuthState(.authenticated)
                 }
             } catch {
-                print("DEBUG: Error \(error)")
                 self.error = .apple(error as? AppleAuthError ?? .unknown)
             }
         }
@@ -210,7 +185,6 @@ extension AuthManager: ASAuthorizationControllerDelegate {
     
     /// Handles errors during the Apple authorization flow.
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("DEBUG: Error \(error)")
         self.error = .apple(.unknown)
     }
 }

@@ -26,7 +26,7 @@ class RegistrationValidationManager {
     private let service: RegistrationValidationProtocol
     
     /// Creates a manager with a backend-specific validation service.
-    /// - Parameter service: An implementation that performs uniqueness checks (e.g., Firebase or Supabase).
+    /// - Parameter service: An implementation that performs uniqueness checks.
     init(service: RegistrationValidationProtocol) {
         self.service = service
     }

@@ -18,8 +18,6 @@ enum AuthError: Error, LocalizedError {
     case google(GoogleAuthError)
     /// Errors specific to Sign in with Apple flows.
     case apple(AppleAuthError)
-    /// Errors specific to Sign in with Apple flows.
-    case supabase(SupabaseAuthError)
     /// Unknow errors
     case unknown(Error)
     
@@ -33,8 +31,6 @@ enum AuthError: Error, LocalizedError {
         case .google(let err):
             return err.localizedDescription
         case .apple(let err):
-            return err.localizedDescription
-        case .supabase(let err):
             return err.localizedDescription
         case .unknown(let err):
             return err.localizedDescription

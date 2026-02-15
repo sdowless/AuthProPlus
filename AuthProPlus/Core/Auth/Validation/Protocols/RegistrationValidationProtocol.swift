@@ -8,7 +8,7 @@
 
 /// A backend-agnostic contract for validating registration inputs.
 ///
-/// Conformers implement backend-specific checks (e.g., Firestore, Supabase) to verify
+/// Conformers implement backend-specific checks to verify
 /// whether inputs like email and username are unique and acceptable for account creation.
 protocol RegistrationValidationProtocol {
     /// Validates an email for registration.
