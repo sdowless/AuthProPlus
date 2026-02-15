@@ -32,8 +32,10 @@ struct ProfileImageSelectorView: View {
             
             Spacer()
             
+            let currentProfileImage = store.profileImage
+            
             PhotosPicker(selection: $selectedPickerItem) {
-                if let profileImage = store.profileImage {
+                if let profileImage = currentProfileImage {
                     ASAvatarView(image: profileImage, size: .custom(200))
                 } else {
                     ZStack(alignment: .bottomTrailing) {
@@ -60,8 +62,8 @@ struct ProfileImageSelectorView: View {
                     uploadProfilePhoto()
                 }
                 .buttonStyle(.standard, isLoading: $isUploadingPhoto)
-                .disabled(store.profileImage == nil)
-                .opacity(store.profileImage == nil ? 0.5 : 1.0)
+                .disabled(currentProfileImage == nil)
+                .opacity(currentProfileImage == nil ? 0.5 : 1.0)
                 
                 Button("Skip for now") {
                     router.pushNextAccountCreationStep()
