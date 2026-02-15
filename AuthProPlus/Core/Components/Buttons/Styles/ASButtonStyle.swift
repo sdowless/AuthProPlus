@@ -14,6 +14,8 @@ import SwiftUI
 struct ASButtonStyle: ButtonStyle {
     /// The current color scheme, used to adapt border contrast.
     @Environment(\.colorScheme) var colorScheme
+    /// The loading state of the button
+    @Environment(\.isLoading) var isLoading
     
     /// Emphasis rank that controls foreground, background, and border treatment.
     private var rank: ASButtonRank
@@ -37,21 +39,18 @@ struct ASButtonStyle: ButtonStyle {
         self.variant = variant
     }
     
-    /// Creates the styled button body for the given configuration.
-    func makeBody(configuration: Configuration) -> some View {
+    func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(size == .compact ? .subheadline : .headline)
-            .fontWeight(.semibold)
-            .foregroundStyle(foregroundColor.opacity(configuration.isPressed ? 0.4 : 1.0))
-            .frame(width: width, height: height)
-            .padding(.horizontal, size == .compact ? 18 : 0)
-            .background(backgroundColor.opacity(configuration.isPressed ? 0.4 : 1.0))
-            .clipShape(.capsule)
-            .overlay {
-                Capsule()
-                    .stroke(borderColor, lineWidth: 1.0)
-                    .opacity(configuration.isPressed ? 0.4 : 1.0)
-            }
+            .labelStyle(
+                .standardButton(
+                    rank: rank,
+                    size: size,
+                    variant: variant,
+                    iconLayout: iconLayout,
+                    isPressed: configuration.isPressed
+                ),
+                isLoading: isLoading
+            )
     }
 }
 
