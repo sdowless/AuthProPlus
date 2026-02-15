@@ -11,7 +11,7 @@ struct UserInformationView: View {
     @Environment(\.authRouter) private var router
     @Environment(\.authDataStore) private var store
     @Environment(\.registrationValidationManager) private var validationManager
-
+    
     @State private var emailValidation: InputValidationState = .idle
     @State private var usernameValidation: InputValidationState = .idle
     @State private var emailValidationTask: Task<Void, Never>?
@@ -20,51 +20,49 @@ struct UserInformationView: View {
     var body: some View {
         @Bindable var store = store
         
-        ZStack(alignment: .bottomTrailing) {
-            VStack {
-                Text("Create your account")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        VStack {
+            Text("Create your account")
+                .font(.title)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            VStack(spacing: 20) {
+                ASTextField("Enter your full name", title: "Name", text: $store.name)
+                    .textContentType(.name)
                 
-                VStack(spacing: 20) {
-                    ASTextField("Enter your full name", title: "Name", text: $store.name)
-                        .textContentType(.name)
-                    
-                    ASTextField(
-                        "name@example.com",
-                        title: "Email",
-                        validationState: emailValidation,
-                        errorMessage: "The email is already in use. Please log in or try again.",
-                        text: $store.email
-                    )
-                    .keyboardType(.emailAddress)
-                    .textContentType(.emailAddress)
-                    .textInputAutocapitalization(.never)
-                    
-                    ASTextField(
-                        "Enter your username",
-                        title: "Username",
-                        validationState: usernameValidation,
-                        errorMessage: "This username is already in use. Please try again.",
-                        text: $store.username
-                    )
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                }
-                .padding(.vertical)
+                ASTextField(
+                    "name@example.com",
+                    title: "Email",
+                    validationState: emailValidation,
+                    errorMessage: "The email is already in use. Please log in or try again.",
+                    text: $store.email
+                )
+                .keyboardType(.emailAddress)
+                .textContentType(.emailAddress)
+                .textInputAutocapitalization(.never)
                 
-                Spacer()
+                ASTextField(
+                    "Enter your username",
+                    title: "Username",
+                    validationState: usernameValidation,
+                    errorMessage: "This username is already in use. Please try again.",
+                    text: $store.username
+                )
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical)
+            
+            Spacer()
             
             ASButton("Next") {
                 router.pushNextAccountCreationStep()
             }
-            .buttonStyle(.standard(rank: .secondary, size: .compact))
+            .buttonStyle(.standard(rank: .primary))
             .disabled(!formIsValid)
             .opacity(formIsValid ? 1.0 : 0.5)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .onChange(of: store.username) { _, newValue in
             validateUsername(newValue)
         }
@@ -88,11 +86,11 @@ private extension UserInformationView {
     }
     
     func validateOnAppearIfNecessary() {
-        if store.email.isValidEmail(){
+        if store.email.isValidEmail() {
             validateEmail(store.email)
         }
         
-        if store.username.isValidUsername(){
+        if store.username.isValidUsername() {
             validateEmail(store.username)
         }
     }
@@ -104,13 +102,14 @@ private extension UserInformationView {
             emailValidation = .idle
             return
         }
-
+        
         emailValidationTask?.cancel()
+        
         emailValidationTask = Task {
             await MainActor.run { emailValidation = .validating }
             try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
-
+            
             let result = await validationManager.validateEmail(email)
             guard !Task.isCancelled else { return }
             await MainActor.run { emailValidation = result }
@@ -124,13 +123,13 @@ private extension UserInformationView {
             usernameValidation = .idle
             return
         }
-
+        
         usernameValidationTask?.cancel()
         usernameValidationTask = Task {
             await MainActor.run { usernameValidation = .validating }
             try? await Task.sleep(for: .milliseconds(500))
             guard !Task.isCancelled else { return }
-
+            
             let result = await validationManager.validateUsername(username)
             guard !Task.isCancelled else { return }
             await MainActor.run { usernameValidation = result }

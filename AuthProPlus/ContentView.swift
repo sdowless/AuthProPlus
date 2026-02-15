@@ -40,6 +40,7 @@ struct ContentView: View {
                                 signOut()
                             }
                             .buttonStyle(.standard, isLoading: $isSigningOut)
+                            .padding()
                         }
                         .transition(.move(edge: .trailing))
                     }
