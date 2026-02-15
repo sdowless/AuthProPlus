@@ -16,7 +16,7 @@ import FirebaseFirestore
 ///   `UserServiceProtocol` and performs the appropriate mapping from `BaseUser`.
 struct FirebaseUserService: UserServiceProtocol {
     /// Helper responsible for uploading user images and returning a remote URL string.
-    private let imageUploader = ImageUploader()
+    private let imageUploader = FirebaseImageUploader()
     
     /// Fetches the current authenticated user from Firestore using the Firebase Auth UID.
     func fetchCurrentUser() async throws -> AuthProPlusUser? {
