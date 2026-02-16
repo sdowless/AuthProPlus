@@ -27,6 +27,7 @@ struct AccountCreationCompletionView: View {
                 .padding(.horizontal, 24)
             
             ASButton("Complete Sign Up") {
+                store.clearData()
                 authManager.updateAuthState(.authenticated)
             }
             .buttonStyle(.standard)

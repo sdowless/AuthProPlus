@@ -5,7 +5,7 @@
 //  Created by Stephan Dowless on 1/27/25.
 //
 
-import Foundation
+import SwiftUI
 
 /// Emphasis ranks for `ASButton`.
 ///
@@ -18,4 +18,15 @@ enum ASButtonRank {
     case secondary
     /// Lowest emphasis for less critical or subtle actions.
     case tertiary
+}
+
+extension ASButtonRank {
+    var loadingIndicatorForegroundStyle: Color {
+        switch self {
+        case .primary:
+            return .primaryTextInverse
+        case .secondary, .tertiary:
+            return .primaryText
+        }
+    }
 }

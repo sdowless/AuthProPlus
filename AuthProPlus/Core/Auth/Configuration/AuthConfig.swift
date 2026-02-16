@@ -46,8 +46,7 @@ struct AuthConfig {
     /// (e.g., `AppConstants.googleClientID`) used by GoogleAuthService. For Firebase setups,
     /// ensure `GoogleService-Info.plist` and reversed URL scheme are present.
     static var provider: AuthServiceProvider {
-//        return .supabase(client: supabaseClient)
-        return .firebase
+        return .supabase(client: supabaseClient)
     }
 }
 

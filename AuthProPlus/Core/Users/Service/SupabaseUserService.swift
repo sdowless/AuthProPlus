@@ -17,10 +17,11 @@ struct SupabaseUserService: UserServiceProtocol {
     private let client: SupabaseClient
 
     /// Helper responsible for uploading user images and returning a remote URL string.
-    private let imageUploader = ImageUploader()
+    private let imageUploader: SupabaseImageUploader
 
     init(client: SupabaseClient) {
         self.client = client
+        self.imageUploader = SupabaseImageUploader(client: client)
     }
 
     /// Fetches the current authenticated user from Supabase using the auth session.

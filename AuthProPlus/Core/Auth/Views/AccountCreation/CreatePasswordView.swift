@@ -38,10 +38,16 @@ struct CreatePasswordView: View {
             }
                         
             VStack(spacing: 20) {
-                Text("By signing up, you agree to the Terms of Service and Privacy Policy.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.leading)
+                Link(destination: URL(string: AppConstants.termsOfServiceURLString)!) {
+                    HStack(spacing: 2) {
+                        Text("By signing up, you agree to our")
+                        
+                        Text("Terms and Conditions")
+                            .fontWeight(.semibold)
+                    }
+                }
+                .font(.footnote)
+                .foregroundStyle(.gray)
                 
                 ASButton("Sign up") {
                     onSignUp()

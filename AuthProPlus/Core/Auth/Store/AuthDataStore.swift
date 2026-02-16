@@ -25,4 +25,12 @@ class AuthDataStore {
     var password = ""
     /// An optional profile image selected during onboarding.
     var profileImage: Image?
+    
+    func clearData() {
+        email = ""
+        username = ""
+        name = ""
+        password = ""
+        profileImage = nil
+    }
 }

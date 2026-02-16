@@ -50,7 +50,10 @@ struct AuthenticationRootView: View {
                     ASButton("Continue with Google", imageResource: .googleIcon) {
                         signInWithGoogle()
                     }
-                    .buttonStyle(.standard(rank: .secondary))
+                    .buttonStyle(
+                        .standard(rank: .secondary),
+                        isLoading: $authManager.googleAuthInProgress
+                    )
 
                     ASButton("Continue with Apple", systemImage: "apple.logo") {
                         signInwithApple()
@@ -159,7 +162,7 @@ private extension AuthenticationRootView {
             AuthManager(
                 service: MockAuthService(),
                 googleAuthService: MockGoogleAuthService(),
-                appleAuthService: AppleAuthService()
+                appleAuthService: MockAppleAuthService()
             )
         )
         .environment(UserManager(service: MockUserService()))
